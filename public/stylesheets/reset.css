@@ -1,0 +1,67 @@
+body{
+    background-image: url("background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-width: 70%;
+}
+div .container{
+      border: 1px solid black;
+      background-color: #ffffff;
+      margin: 0 auto;
+}
+h1{
+    text-align: center;
+    font-size: 70px;
+    margin-top: 60px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    color: red;
+    font-family: American Typewriter, serif;
+    text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34, 20px -40px 50px #ec760c, -20px -60px 60px #cd4606, 0 -80px 70px #973716, 10px -90px 80px #451b0e;
+  
+  }
+.provideEmail{
+    border: 1px black;
+    border-style: groove;
+    background-color: #ffffff;
+    margin: 50px auto;
+    width: 500px;
+    height: 200px;
+    border-radius: 2%;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+}
+.Have_login{
+    text-align: center;
+    color: white;
+}
+label{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px;
+    width:100px;
+    top:50px;
+}
+input{
+    margin: 20px auto;
+    width: 180px;
+    height: 25px;
+    border-radius: 2%;
+}
+input[id="email-field"]{
+    font-size: 30px;
+}
+input[id="email-field"]:focus{
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+}
+input[id="button"]{
+    border-radius: 8px;
+}
+input[id="button"]:hover {
+    background-color: #66afe9;
+}

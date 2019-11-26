@@ -1,0 +1,352 @@
+body{
+  text-align: center;
+  justify-content: center;
+  /* display: flex; */
+  background-image: url("background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* display: block; */
+  height: 1000px;
+  min-zoom: 0.8;
+  max-zoom: 1.3;
+}
+div[class="total"]{
+  display: inline-block;
+  margin-top: 0;
+}
+div[class="bodyGame"]{
+  height: 500px;
+  width: 700px;
+  display: inline-block;
+  justify-content: center;
+  text-align: center;
+}
+table{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: 40px; 
+  border-spacing: 10px;
+}
+
+td[class="container"],tr[class="trgame"]{
+  height: 50px;
+  width: 50px;
+  position: relative;
+}
+
+.cp{
+  margin-top: 15px;
+  height: 10%;
+}
+
+p[class="game"]{
+  display: none;
+  margin: 7px;
+  font-size: 16px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: #a1999a;
+  opacity: 0.8;
+}
+
+.reset{
+  height: 30px;
+  font-size: 25px;
+  color: white;
+
+}
+
+.block{
+  pointer-events:none;
+}
+
+.rotatecard{
+  -webkit-transition: 1s;
+  -webkit-transform: rotateY(180deg);
+}
+
+.rotate{
+  -webkit-transition: 1s;
+  -webkit-transform: rotate(90deg);
+}
+
+.image{
+  background-image: url('image.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.corr{
+  background-image: url('cross mark.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.fadeout{
+  -webkit-animation: fade-out 1.5s ease-in forwards;
+}
+
+.fadein{
+  -webkit-animation: fade-in 1.5s ease-in forwards;
+}
+
+@-webkit-keyframes fade-in {
+  0%   { opacity: 0; }
+  100% { opacity: 1; } 
+}
+
+@-webkit-keyframes fade-out {
+  0%   { opacity: 1; }
+  100% { opacity: 0; } 
+}
+
+div {
+  /* position: relative; */
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  margin: 20px;
+  width: 50px;
+  height: 50px;
+}
+
+.card {
+  transition: all 1s ease-out;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.front, .back {
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  -webkit-backface-visibility: hidden;
+}
+
+.front {
+  background-color: #60433a;
+}
+
+.back {
+  background-color: #60433a;
+  -webkit-transform: rotateY(180deg);
+}
+
+.box{
+  height: 500px;
+  width: 800px;
+  padding-top: 10px;
+  background-color: #4f392f;
+  box-shadow: 15px 15px 10px;
+  border-radius: 4px;
+}
+
+tbody{
+  display: block;
+  background-color: #271b17;
+}
+button[id = "button"]{
+  margin-top: 100px;
+  /* display: none; */
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+button[id = "button"]:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+button[id = "button2"]{
+  margin-top: 200px;
+  display: none;
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+button[id = "button2"]:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+button[id = "button1"]{
+  display: none;
+  margin-right: 10px;
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+button[id = "button1"]:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+button[id = "button3"]{
+  display: none;
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+button[id = "button3"]:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+/*--------- Board --------------*/
+div.leaderboard{
+  background-color: #FFFFFF;
+  position:fixed;
+  margin:auto;
+  border:2px solid grey;
+  border-radius: 10px;
+  height: auto;
+  width: 250px;
+  text-align: center;
+  padding-bottom: 20px;
+  max-width: 20%; 
+}
+h1{
+  font-family: "Arial",Arial,sans-serif;
+  font-weight: bolder;
+  color:black;
+  font-size: 25px;
+  position:relative;
+}
+div.innerleaderboard{
+  margin:auto;
+}
+table[class="board"]{
+  border-collapse: collapse;
+  margin:auto;
+  width:95%;
+  background-size: inherit;
+  max-width: 20%;
+}
+th[class="board"],td[class="board"]{
+  border: 1px solid #cfcfcf;
+  background-color: lightblue;
+  padding:6px;
+}
+
+/* Alert box */
+div.loggedinAlert {
+  display: block;
+  position: relative;
+  top:0px;
+  padding: 20px;
+  background-color: #7a7f85;
+  color: white;
+  margin-bottom: 15px;
+  height: 20px;
+  width: auto;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
+
+div.loggedin{
+  position: relative;
+  width:100px;
+  height:100px;
+  border-radius:50px;
+  }
+
+div.showInfo{
+  position: fixed;
+  justify-content: center;
+  left:90%;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #0097a7;
+  border-radius: 10px;
+  display: inline-block;
+  text-align: center;
+  width: auto;
+  height: auto;
+  max-width: 20%;
+}
+form[id="if"]{
+  text-align: center;
+  justify-content: center;
+}
+p.showInfo{ 
+  color: white;
+  margin: 5px auto;
+}
+
+button[id="logout"]{
+  margin: 7px 7px 10px 7px;
+  border-radius: 8px;
+}
+button[id="logout"]:hover{
+  margin: 7px 7px 10px 7px;
+  background-color: #0097a7;
+  color: white;
+  border-radius: 8px;
+}
+
+button[id="good"]{
+  border-radius: 8px;
+  background-color: #fff;
+}
+button[id="good"]:hover{
+  background-color: #0097a7;
+  color: white;
+  border-radius: 8px;
+}

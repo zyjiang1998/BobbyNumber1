@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="/stylesheets/admin.css">
+  <title>Welcome</title>
+</head>
+
+<body>
+  <form action="/home" method="POST">
+    <div class="homeBar">
+      <button class="homeBar" name="button">Home</button>
+    </div>
+  </form>
+  <h2> Users Data</h2>
+  <table>
+    <tr>
+      <th>id</th>
+      <th>username</th>
+      <th>password</th>
+      <th>email</th>
+      <th>score</th>
+      <th>Modify</th>
+    </tr>
+    <% rows.forEach((r) =>{ %>
+    <tr>
+      <td><%=r.id%></td>
+      <td><%=r.username%></td>
+      <td><%=r.password%></td>
+      <td><%=r.email%></td>
+      <td><%=r.score%></td>
+      <td>
+        <form action="/admin/<%=r.id%>" method="POST"><input value="Delete" type="submit" id="deleteu"></form>
+      </td>
+      <% }); %>
+    </tr>
+  </table>
+</body>
+
+</html>

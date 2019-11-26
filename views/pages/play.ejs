@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Welcome</title>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/game.css">
+</head>
+
+<body>
+  <div class="loggedinAlert" id="loggedinAlert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    Player has logged in!.
+  </div>
+  <div class="total">
+    <button id = "good" style="display: none; position: fixed;" onclick=" over()">show the leaderboard</button>
+    <script>
+      function over (){
+        document.getElementsByClassName('leaderboard')[0].style.display = "block";
+        document.getElementById('good').style.display = "none";
+      }
+    </script>
+    <div class="leaderboard" onclick="t1()">
+      <h1>Leaderboard</h1>
+      <script>
+        function t1(){
+          document.getElementsByClassName('leaderboard')[0].style.display = "none";
+          document.getElementById('good').style.display = "block";
+        }
+      </script>
+      <div class="innerleaderboard">
+      <table class="board">
+        <tr>
+          <th class="board">rank</th>
+          <th class="board">Username</th>
+          <th class="board">Score</th>
+        </tr>
+        <% rows.forEach((r) =>{ %>
+        <tr>
+          <td class="board"><%=r.rank%></td>
+          <td class="board"><%=r.username%></td>
+          <td class="board" id="oldScore"><%=r.score%></td>
+          <% }); %>
+        </tr>
+        </table>
+        </div>
+      </div>
+
+    <!-- Allen write game -->
+    <div class="bodyGame">
+      <div class="box" id="box">
+        <div class="cp">
+          <p class="game"></p>
+          <p class="game"></p>
+          <p class="game"></p>
+        </div>
+        <button type="button" name="button" id="button">Click me</button>
+        <div class="reset"></div>
+        <div class="reset"></div>
+        <button type="button" name="button" id="button2">Next</button>
+        <table id="matrix">
+        </table>
+        <button type="button" name="button" id="button1" style="display: none;">Play Again!</button>
+        <button type="button" name="button" id="button3" style="display: none;">Submit <p id="user" style="display:none;"><%=userName%></p> Score.</button>
+      </div>
+      <script src="/js/game.js"></script>
+
+    </div>
+
+    <!-- Andy -->
+    <div class="showInfo">
+      <form action="/login" method="post" id="if">
+        <p class="showInfo"><%=userName%></p>
+        <button id="logout" onclick="signOut();">Logout</button>
+        <script>
+          function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+            console.log('User signed out.');
+            });
+          }
+        </script>
+      </form>
+    </div>
+  </div>
+
+  <!-- Andy -->
+
+</body>
+<script src="/js/play.js"></script>
+
+</html>

@@ -1,0 +1,21 @@
+body{
+  background-image: url("background.jpg")
+}
+div.welcome{
+  text-align: center;
+  margin: 30px;
+}
+h1{
+  color: white;
+  font-size: 50px;
+}
+div.login{
+  margin: auto;
+  width: 80%;
+  height: 775px;
+  background-color: #e9eff1;
+  position:relative;
+  right:-20px;
+  border:2px solid grey;
+  border-radius: 30px;
+}

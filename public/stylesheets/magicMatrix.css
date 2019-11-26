@@ -1,0 +1,196 @@
+body{
+  background-image: url("background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-width: 70%;
+}
+
+body.login{
+  background-image: none;
+}
+
+
+h1{
+  text-align: center;
+  font-size: 70px;
+  margin-top: 60px;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  color: red;
+  font-family: American Typewriter, serif;
+  text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34, 20px -40px 50px #ec760c, -20px -60px 60px #cd4606, 0 -80px 70px #973716, 10px -90px 80px #451b0e;
+
+}
+h1[id="log"]{
+  margin-top:100px;
+}
+.matrix{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.box-1{
+  background-color: white;
+  border: 1px solid #aaaaaa;
+  border-radius: 5%;
+  height: auto;
+  width: auto;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  margin: 100px auto;
+  
+  -webkit-animation: spin 15s linear 0s infinite normal;
+  -moz-animation: spin 15s linear 0s infinite normal;
+  -ms-animation: spin 15s linear 0s infinite normal;
+  -o-animation: spin 15s linear 0s infinite normal;
+  animation: spin 15s linear 0s infinite normal;
+}
+.box-1:hover {
+  -webkit-animation-play-state: running;
+  -moz-animation-play-state: running;
+  -ms-animation-play-state: running;
+  -o-animation-play-state: running;
+  animation-play-state: running;
+}
+.canvas1{
+  background-color: blue;
+  border: 1px solid black;
+  margin: 20px;
+  height: 100px;
+  width: 100px;
+}
+.canvas2{
+  background-color:blue;
+  border: 1px solid black;
+  margin: 20px;
+  height: 100px;
+  width: 100px;
+}
+.canvas3{
+  background-color:black;
+  border: 1px solid black;
+  margin: 20px;
+  height: 100px;
+  width: 100px;
+}
+.canvas4{
+  background-color: blue;
+  border: 1px solid black;
+  margin: 20px;
+  height: 100px;
+  width: 100px;
+}
+.canvas5{
+  background-color: black;
+  border: 1px solid black;
+  margin: 20px;
+  height: 100px;
+  width: 100px;
+}
+.canvas6{
+  background-color: black;
+  border: 1px solid black;
+  margin: 20px;
+  height: 100px;
+  width: 100px;
+}
+.canvas7{
+  background-color:blue;
+  border: 1px solid black;
+  margin: 20px;
+  height: 100px;
+  width: 100px;
+}
+.canvas8{
+  background-color: blue;
+  border: 1px solid black;
+  margin: 20px;
+  height: 100px;
+  width: 100px;
+}
+.canvas9{
+  background-color:blue;
+  border: 1px solid black;
+  margin: 20px;
+  height: 100px;
+  width: 100px;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+  0% {-webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+@-ms-keyframes spin {
+  0% {-ms-transform: rotate(0deg); }
+  100% { -ms-transform: rotate(360deg); }
+}
+@-moz-keyframes spin {
+  0% { -moz-transform: rotate(0deg); }
+  100% { -moz-transform: rotate(360deg); }
+}
+@-o-keyframes spin {
+  0% { -o-transform: rotate(0deg); }
+  100% { -o-transform: rotate(360deg); }
+}
+div[id="box-2"]{
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  margin: 100px auto;
+  width:100%;
+}
+@keyframes sheen {
+  0% {
+    transform: skewY(-45deg) translateX(0);
+  }
+  100% {
+    transform: skewY(-45deg) translateX(12.5em);
+  }
+}
+
+
+button[name="button"] {
+  padding: 0.75em 2em;
+  text-align: center;
+  text-decoration: none;
+  background-color: white;
+  color: #2194E0;
+  border: 2px solid #2194E0;
+  margin: 10px;
+  font-size: 24px;
+  display: inline-block;
+  border-radius: 0.3em;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+button[name="button"]:before {
+    content: "";
+    background-color: rgba(255,255,255,0.5);
+    height: 100%;
+    width: 3em;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: -4.5em;
+    transform: skewX(-45deg) translateX(0);
+    transition: none;
+}
+button[name="button"]:hover {
+    background-color: #2194E0;
+    color: #fff;
+    border-bottom: 4px solid darken(#2194E0 10%);
+}
+button[name="button"]:hover:before {
+      transform: skewX(-45deg) translateX(15em);
+     transition: all 0.5s ease-in-out;
+}

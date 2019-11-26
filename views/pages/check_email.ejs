@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<% email = data.email %>
+<% num = data.num %>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/stylesheets/check_email.css">
+    <title>Input Code</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Reset Your Password</h1>
+        <% if (num == 1) {%>
+        <div class="impliect">
+            <p class="impliect">Verification code error Please re-enter</p>
+        </div>
+        <% } %>
+        <div class="box-1">
+            <form action="/login/reset/<%=email%>/new_password" method="POST">
+                <p class="box1">Check your email for a code to reset your password. If it doesn’t appear within a few
+                    minutes, check your spam folder.</p>
+                <p class="box1">Verification code :</p>
+                <input type="text" name="vercode" id="vercode" class="vercode" required>
+                <br>
+                <input type="text" name="recemail" style="display: none;" value="<%=email%>">
+                <button name="button" id="set_password">Set New Password</button>
+            </form>
+        </div>
+        <div class="box-2">
+            <p class="box2">If you have not received the message within a few minutes, check the spam folder.
+                If you still don't see the email, please confirm that the email has ever been registered.
+                If not, please register.</p>
+            <div class="backButton">
+                <form action="/login1" method="GET">
+                    <div class="button"><button name="button" id="back_to_login"> Sign In</button></div>
+                </form>
+                <form action="/signup" method="POST">
+                    <div class="button"><button name="button" id="Sign_up"> Sign Up</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

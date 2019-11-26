@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/stylesheets/reset.css">
+    <title>Reset Password</title>
+    <script src="/js/reset.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1> Reset Password </h1>
+        <div class="provideEmail">
+            <form action="/login/reset/check" method="POST">
+                <label for="email_field"> Email :</label><br>
+                <input type="text" name="email" id="email_field" value=""><br>
+                <input type="submit" value="Sent Code to Your Email" id="button" name="commit" onclick="check()">
+            </form>
+        </div>
+        <div class="Have_login">
+            <p>Already have login and password?<a href="/login1"> Sign in</a></p>
+        </div>
+    </div>
+</body>
+</html>

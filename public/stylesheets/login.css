@@ -1,0 +1,318 @@
+body{
+  background-image: url("background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-width: 70%;
+}
+
+
+/* login modal */
+/* The Modal (background) */
+
+div.errormsg{
+  position:relative;
+  left:50px;
+  color: red;
+  top:30px
+}
+div.login{
+    border-style: groove;
+    border-width: 1px;
+    position: relative;
+    margin:auto;
+    width: 500px;
+    height: 650px;
+    background-color: #fff;
+    border-radius: 2%;
+    box-shadow: 15px 15px 10px black;
+  }
+
+  div.modal-content1{
+    background-color: white;
+    margin:auto;
+    padding: 20px;
+    width:500px;
+    height:500px;
+    box-shadow: 0 10px 15px 0 rgba(0,0,0,0.9),0 17px 25px 0 rgba(0,0,0,0.2);
+    animation-name:modalopen;
+    animation-duration: 0.5s;
+  }
+
+
+  div.userName{
+    position:relative;
+    left:20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    width:100px;
+    top:50px;
+  }
+
+  div.passWord1{
+    position: relative;
+    left:20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    width:100px;
+    top:70px;
+  }
+
+  input.userName{
+    position: relative;
+    width:450px;
+    height:40px;
+    font-size:20px;
+    border-style: groove;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+  }
+
+  input.passWord1{
+    position: relative;
+    width:450px;
+    height:40px;
+    font-size:20px;
+    border-radius: 5px;
+    border-style: groove;
+    margin-bottom: 1rem;
+  }
+
+  .closeBtn1{
+    color:wheat;
+    float: right;
+    font-size:30px;
+  }
+
+  .closeBtn1:hover,.closeBtn1:focus{
+    color:red;
+    text-decoration:none;
+    cursor:pointer;
+  }
+
+  button.login{
+    background-color: rgb(26,170,85);
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    position: relative;
+    border-radius: 5px;
+    width:458px;
+    height: 50px;
+    top:120px;
+    left:20px;
+  }
+
+  button.signupHere{
+    position: relative;
+    background-color: Transparent;
+    border-style: none;
+    outline: none;
+    left:20px;
+    text-decoration: underline;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    width:auto;
+    height: 30px;
+    top:140px;
+  }
+
+  label.remember{
+    position: relative;
+    top:80px;
+    right:-20px;
+
+  }
+
+  span.forgotPassword{
+    position: relative;
+    top:180px;
+    right: -25px;
+    text-decoration: underline;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+  }
+  /* Write by kevin */
+  input[id="forgotPage"]{
+    background-color: #fff;
+    color: blue;
+    border: 0px none;
+    text-decoration:underline;
+    font-size: 12px;
+  }
+  input[id="forgotPage"]:hover{
+    color:red;  
+    border: none;  
+    cursor: hand;  
+    cursor: pointer;  
+    text-decoration:underline; 
+  }
+
+
+  @keyframes modalopen{
+    from{opacity: 0}
+    to {opacity: 2}
+  }
+
+
+
+  /* Signup Modal */
+  div.signupModal{
+    display: none;
+    position:fixed;
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+    overflow:auto;
+    background-color: rgba(0,0,0,0.5);
+  }
+
+  div.modal-content2{
+    background-color: white;
+    margin:auto;
+    padding: 20px;
+    width:500px;
+    height:500px;
+    box-shadow: 0 10px 15px 0 rgba(0,0,0,0.9),0 17px 25px 0 rgba(0,0,0,0.2);
+    animation-name:modalopen;
+    animation-duration: 0.5s;
+  }
+
+
+  div.email{
+    position:relative;
+    left:20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    width:100px;
+    top:50px;
+
+  }
+
+  div.passWord2{
+    position: relative;
+    left:20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    width:100px;
+    top:90px;
+  }
+
+  div.userName{
+    position: relative;
+    left:20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    width:120px;
+    top:70px;
+  }
+
+  div.repeatPassword{
+    position: relative;
+    left:20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    width:300px;
+    top:110px;
+  }
+
+  input.email{
+    position: relative;
+    width:450px;
+    height:40px;
+    font-size:20px;
+    border-style: groove;
+    border-radius: 5px;
+  }
+
+  input.userName{
+    position: relative;
+    width:450px;
+    height:40px;
+    font-size:20px;
+    border-style: groove;
+    border-radius: 5px;
+  }
+
+  input.passWord2{
+    position: relative;
+    width:450px;
+    height:40px;
+    font-size:20px;
+    border-style: groove;
+    border-radius: 5px;
+  }
+
+  input.repeatPassword{
+    position: relative;
+    width:450px;
+    height:40px;
+    font-size:20px;
+    border-style: groove;
+    border-radius: 5px;
+  }
+
+  button.signup{
+    background-color: rgb(26,170,85);
+    color: #fff;
+    position: relative;
+    width:458px;
+    height: 50px;
+    font-size: 20px;
+    top:150px;
+    left:20px;
+    border-radius: 5px;
+  }
+
+  .g-signin2{
+    position:relative;
+    top:145px;
+    left:28px;
+  }
+
+  .closeBtn2{
+    color:wheat;
+    float: right;
+    font-size:30px;
+  }
+
+  .closeBtn2:hover,.closeBtn2:focus{
+    color:red;
+    text-decoration:none;
+    cursor:pointer;
+  }
+
+  p.signupSuccess{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 60px;
+    color: aliceblue;
+    text-align: center;
+    margin: 100px auto;
+  }
+
+  @keyframes sheen {
+    0% {
+      transform: skewY(-45deg) translateX(0);
+    }
+    100% {
+      transform: skewY(-45deg) translateX(12.5em);
+    }
+  }
+
+  p[id="log"]{
+    text-align: center;
+    font-size: 100px;
+    color: white;
+  }
+
+
+  @keyframes modalopen{
+    from{opacity: 0}
+    to {opacity: 2}
+  }
+
+  /*p[class="p2"]{
+    visibility: hidden;
+    display: none;
+  }*/

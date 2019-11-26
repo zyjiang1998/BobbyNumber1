@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/stylesheets/admin.css">
+    <title></title>
+  </head>
+  <body>
+    <form id="form" action="/updateuser" method="post">
+      <table>
+        <tr>
+          <th>id</th>
+          <th>username</th>
+          <th>password</th>
+          <th>email</th>
+          <th>score</th>
+          <th>usertype</th>
+        </tr>
+        <% rows.forEach((r) =>{ %>
+          <tr>
+            <td><input class="inputs" id="inputid" type="number" name="id" readonly value=<%= r.id %>></td>
+            <td><input class="inputs" id="inputusername" type="text" name="username" required value=<%= r.username %>></td>
+            <td><input class="inputs" id="inputpassword" type="text" name="password" required value=<%= r.password %>></td>
+            <td><input class="inputs" id="inputemail" type="text" name="email" required value=<%= r.email %>></td>
+            <td><input class="inputs" id="inputscore" type="number" name="score" required value=<%= r.score %>></td>
+            <td><select name = "usertype">
+              <option value="player">player</option>
+              <option value="admin">admin</option>
+              <option value="superuser">superuser</option>
+            </select></td>
+            <% }); %>
+          </tr>
+      </table>
+      <button type="submit" name="button">Submit</button>
+    </form>
+  </body>
+</html>

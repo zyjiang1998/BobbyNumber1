@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/login.css">
+    <script src="/js/signup.js"></script>
+    <title> Home</title>
+  </head>
+  <body class="login">
+        <form action="/magicMatrix">
+            <div class="homeBar">
+                <button class="homeBar">Home</button>
+            </div>
+        </form>
+        <div class="login">
+          <div class="errormsg">
+            <% if (locals.error){ %>
+              <div id="alt_warning" class = "alert alertwarning">
+                <%= error%>
+              </div>
+              <% } %>
+          </div>
+          <form id="sinp" action="/update" method="POST" onsubmit="return validateFrom()" name="nyForm">
+            <div class=email>Email: <input class="email" id="em" type="text" name="email" placeholder="Enter Email" required = "required"><br></div>
+            <div class=userName>Username: <input class="userName" id="User" type="text" name="username" placeholder="Enter Username" required = "required"><br></div>
+            <div class=passWord2>Password: <input class="passWord2" id="password" type="password" name="password" placeholder="Enter Password" required="required"><br></div>
+            <div class=repeatPassword>Repeat Password: <input class="repeatPassword" id="repeatpassword" type="password" name="repeatpassword" placeholder="Repeat Password" required="required"><br></div>
+            <button class="signup" id="signup" type="submit" onclick="forribid1()">Sign Up</button>
+          </form>
+          <br>
+          <br>
+        <form action="/login" method="POST">
+            <button id="signupHere" class="signupHere">If you already have a account, login here</button>
+        </form>
+        </div>
+        <!-- Andy -->
+    </div>
+    </body>
+</html>

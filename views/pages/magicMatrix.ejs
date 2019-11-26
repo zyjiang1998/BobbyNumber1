@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/magicMatrix.css">
+    <title> Home</title>
+  </head>
+  <body>
+    <h1 class="name">Magic Matrix</h1>
+    <div class="matrix">
+    <div class="box-1">
+     <div class="canvas1"></div>
+     <div class="canvas2"></div>
+     <div class="canvas3"></div>
+     <div class="canvas4"></div>
+     <div class="canvas5"></div>
+     <div class="canvas6"></div>
+     <div class="canvas7"></div>
+     <div class="canvas8"></div>
+     <div class="canvas9"></div>
+    </div>
+  </div>
+    <div id="box-2">
+      <form action="/tutorial" method="POST">
+        <button id="tutorial" name="button">Tutorial</button>
+      </form>
+      <form action ="/login" method ="POST">
+        <button id="loginClick" class = "login" name="button">Play</button>
+      </form>
+        
+    </div>
+    <!-- <form action="/play">
+      <button id="tutorial" name="button">playpagetest</button>
+    </form> -->
+    <!-- Login Modal -->
+    <!-- <div id="loginModal" class="loginModal">
+      <div class="modal-content1">
+        <div class="modal-header">
+          <span id="closeBtn1" class="closeBtn1">&times;</span>
+        </div>
+        <form action="/login" method="post">
+          <div class=userName>Username: <input class="userName" id="us" type="text" name="userName" placeholder="Enter Username" required><br></div>
+          <div class=passWord1>Password: <input class="passWord1" id="ps" type="password" name="passWord" placeholder="Enter Password" required><br></div>
+          <label class="remember">
+            <input type="checkbox" checked="checked" name="remember"> Remember me
+          </label>
+          <button class="login" id = "login">Login</button>
+        </form>
+          <button id="signupHere" class="signupHere">If you dont have a account, sign up here</button>
+          <span class="forgotPassword">Forgot <a href="#" id="forgotPage" class="forgotPassword">Password?</a></span>
+        
+
+      </div>
+    </div> -->
+
+
+    <!-- Signup Modal -->
+    <!-- <div id="signupModal" class="signupModal">
+        <div class="modal-content2">
+          <div class="modal-header">
+            <span id="closeBtn2" class="closeBtn1">&times;</span>
+          </div>
+          <form id="sinp" action="/signup" method="POST" onsubmit="return validateFrom()" name="nyForm">
+            <div class=email>Email: <input class="email" id="em" type="text" name="email" placeholder="Enter Email" required = "required"><br></div>
+            <div class=userName>Username: <input class="userName" id="User" type="text" name="username" placeholder="Enter Username" required = "required"><br></div>
+            <div class=passWord2>Password: <input class="passWord2" id="password" type="password" name="password" placeholder="Enter Password" required="required"><br></div>
+            <div class=repeatPassword>Repeat Password: <input class="repeatPassword" id="repeatpassword" type="password" name="repeatpassword" placeholder="Repeat Password" required="required"><br></div>
+            <button class="signup" id="signup" type="submit">Sign Up</button>
+          </form>
+        </div>
+    </div> -->
+    <!-- <script src="/js/magicMatrix.js"></script> -->
+  </body>
+</html>
