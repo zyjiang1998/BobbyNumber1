@@ -1,0 +1,65 @@
+body {
+    background-image: url("background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-width: 70%;
+}
+
+h2 {
+    text-align: center;
+    font-size: 70px;
+    margin-top: 60px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    color: red;
+    font-family: American Typewriter, serif;
+    text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34, 20px -40px 50px #ec760c, -20px -60px 60px #cd4606, 0 -80px 70px #973716, 10px -90px 80px #451b0e;
+}
+
+table {
+    width: 70%;
+    margin: auto;
+    word-wrap: break-word;
+}
+
+th {
+    text-align: left;
+    height: 50px;
+    padding-left: 5px;
+    background-color: #dedada;
+}
+
+td {
+    text-align: left;
+    height: 100px;
+    padding-left: 7px;
+}
+
+table,
+th,
+td {
+    background-color: white;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    width: 90%;
+    border: 3px #beabab solid;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+div[class="button"] {
+    width: 200px;
+    height: 50px;
+    border: black, solid, 2px;
+    border-radius: 2px;
+    background-color: rgb(115, 149, 241);
+    text-align: center;
+    justify-content: center;
+    display: flex;
+}
+div[class="name"], div[class="person"]{
+    display: inline-block;
+    float: left;
+}
