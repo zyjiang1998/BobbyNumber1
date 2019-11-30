@@ -1,0 +1,143 @@
+body{
+    background-image: url("background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-width: 70%;
+}
+h1{
+    text-align: center;
+    font-size: 70px;
+    margin-top: 60px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    color: red;
+    font-family: American Typewriter, serif;
+    text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34, 20px -40px 50px #ec760c, -20px -60px 60px #cd4606, 0 -80px 70px #973716, 10px -90px 80px #451b0e;
+  
+}
+div[id="box-1"]{
+    /* background-color: white; */
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: 800px;
+    height: 800px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+div[class="multiplayer"]{
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    border-radius: 8px;
+    font-size: 25px;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 50px;
+
+    box-shadow: inset 0px -3px 7px 0px #29bbff;
+    background:linear-gradient(to bottom, #2dabf9 5%, #0688fa 100%);
+    background-color:#2dabf9;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-weight:bold;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #3d768a;
+}
+div[class="multiplayer"]:active{
+  position: relative;
+  top: 1px;
+}
+div[class="multiplayer"]:hover{
+  background:linear-gradient(to bottom, #0688fa 5%, #2dabf9 100%);
+	background-color:#0688da;
+}
+
+p[class="multiplayer"]{
+    margin: 40px auto;
+}
+
+div[class="single-player"]{
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    border-radius: 8px;
+    font-size: 25px;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 50px;
+
+    box-shadow: inset 0px -3px 7px 0px #29bbff;
+    background:linear-gradient(to bottom, #2dabf9 5%, #0688fa 100%);
+    background-color:#2dabf9;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-weight:bold;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #3d768a;
+}
+div[class="single-player"]:hover{
+  background:linear-gradient(to bottom, #0688fa 5%, #2dabf9 100%);
+	background-color:#0688da;
+}
+div[class="single-player"]:active{
+  position: relative;
+  top: 1px;
+}
+
+p[class="single-player"]{
+    margin: 40px;
+}
+
+div.loggedin{
+    position: relative;
+    width:100px;
+    height:100px;
+    border-radius:50px;
+    }
+  
+  div.showInfo{
+    position: fixed;
+    justify-content: center;
+    left:90%;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #0097a7;
+    border-radius: 10px;
+    display: inline-block;
+    text-align: center;
+    width: auto;
+    height: auto;
+    max-width: 30%;
+  }
+  form[id="if"]{
+    text-align: center;
+    justify-content: center;
+  }
+  p.showInfo{ 
+    font-size: 24px;
+    color: white;
+    margin: 5px auto;
+  }
+  
+  button[id="logout"]{
+    margin: 7px 7px 10px 7px;
+    border-radius: 8px;
+  }
+  button[id="logout"]:hover{
+    margin: 7px 7px 10px 7px;
+    background-color: #0097a7;
+    color: white;
+    border-radius: 8px;
+  }

@@ -19,6 +19,6 @@ function back(){
     user1.style.display = "none";
 
     temp.method = "POST";
-    temp.action = "/login/multiplayer-cache";
+    temp.action = "/login/interface/multiplayer-cache";
     temp.submit();
 }

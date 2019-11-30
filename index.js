@@ -2,6 +2,10 @@ const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5050
 
+///////////////////////// Add Session//////////////////////////////
+const session = require('express-session')
+const bodyparser = require('body-parser')
+
 const { Pool } = require('pg');
 var pool;
 pool = new Pool({
@@ -11,12 +15,23 @@ pool = new Pool({
 var app = express();
 pool.connect();
 
-
+//middle wares
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
+
+app.use(bodyparser.json()); 
+app.use(bodyparser.urlencoded({ extended: true }));
+app.use(session({
+    secret : 'secret', // 对session id 相关的cookie 进行签名
+    resave : true,
+    saveUninitialized: false, // 是否保存未初始化的会话
+    cookie : {
+        maxAge : 1000 * 60 * 3, // 设置 session 的有效时间，单位毫秒
+    },
+}));
 
 app.get('/', async (req, res) => {
     res.render('pages/magicMatrix');
@@ -31,28 +46,31 @@ app.post('/tutorial', (req, res) => res.render('pages/tutorial'));
 
 //////////////// Go to Login Pages /////////////////////
 app.post('/login', (req, res) => {
+    req.session.userName = null;
     var deter = { 'determine': 0 };
     res.render('pages/login', deter);
 });
 
 //////////////// Judge user name, if is admin to admin pages; if is user to user pages /////////////////////
-app.post('/login/interface', async(req, res) => {
+app.post('/login/interface', async (req, res) => {
     var user = req.body.userName;
     var client = await pool.connect();
     var check = await client.query(`SELECT * FROM userdata where username = '${user}'`);
     var checking = (check) ? check.rows : null;
     if (check.rowCount != 0) {
-        checking.forEach( async function(t) {
+        checking.forEach(async function (t) {
             if (t.usertype == 'admin') {
                 if (req.body.passWord == t.password) {
+                    req.session.userName = user;    // Session
                     var admindisplay = await client.query(`select * from userdata where usertype = 'player'`);
-                    var adminroom = await client.query(`SELECT * FROM room;`);
-                    var results = {'rows': admindisplay.rows,'rooms': adminroom.rows};
+                    var adminroom = await client.query(`SELECT * FROM room ORDER BY id ASC;`);
+                    var results = { 'rows': admindisplay.rows, 'rooms': adminroom.rows };
                     // pool.query(admindisplay, (error, result) => {
                     //     if (error)
                     //         res.end(error);
                     //     var results = { 'rows': result.rows };
-                        res.render('pages/admin', results);
+                    console.log(results);
+                    res.render('pages/admin', results);
                     // });
                 } else {
                     var determines = { 'determine': -1 };
@@ -60,14 +78,16 @@ app.post('/login/interface', async(req, res) => {
                 }
             } else if (t.usertype == 'superuser') {
                 if (t.password == req.body.passWord) {
+                    req.session.userName = user;    //Session
                     var superdisplay = await client.query(`select * from userdata order by id`);
-                    var superroom = await client.query(`SELECT * FROM room;`);
-                    var results = {'rows': superdisplay.rows, 'rooms': superroom};
+                    var superroom = await client.query(`SELECT * FROM room ORDER BY id ASC;`);
+                    var results = { 'rows': superdisplay.rows, 'rooms': superroom.rows };
                     // pool.query(superdisplay, (error, result) => {
                     //     if (error)
                     //         res.end(error);
                     //     var results = { 'rows': result.rows };
-                        res.render('pages/superuser', results);
+                    // console.log(results);
+                    res.render('pages/superuser', results);
                     // });
                 } else {
                     var determines = { 'determine': -1 };
@@ -75,14 +95,15 @@ app.post('/login/interface', async(req, res) => {
                 }
             } else {
                 if (req.body.passWord == t.password) {
-                    var display_score = `select rank() over (order by score desc) rank, username, score from userdata where usertype = 'player';`;
+                    req.session.userName = user;
+                    var display_score = `select rank() over (order by score desc) rank, username, score from userdata where usertype = 'player' limit 10;`;
                     //`select RANK() OVER(order by score desc) rank, username, score from userdata`
                     pool.query(display_score, (error, result) => {
                         if (error) {
                             res.end(error);
                         }
                         var results = { 'rows': result.rows, 'userName': user };
-                        res.render('pages/play', results);
+                        res.render('pages/homepages', results);
                     });
                 } else {
                     var determines = { 'determine': -1 };
@@ -100,7 +121,7 @@ app.post('/login/GoogleInterface', (req, res) => {
     var user = req.body.user;
     var email = req.body.email;
     var check = `SELECT * FROM userdata WHERE email = '${email}'`;
-    pool.query(check, async(error, result) => {
+    pool.query(check, async (error, result) => {
         if (error)
             res.end(error);
         if (result.rowCount == 0) {
@@ -113,14 +134,14 @@ app.post('/login/GoogleInterface', (req, res) => {
                     if (error)
                         res.end(error);
                     var results = { 'rows': result.rows, 'userName': user };
-                    res.render('pages/play', results);
+                    res.render('pages/homepages', results);
                 });
             });
         } else {
             var client = await pool.connect();
             var find = await client.query(`SELECT * FROM userdata WHERE email = '${email}';`);
             var finding = (find) ? find.rows : null;
-            finding.forEach(function(t) {
+            finding.forEach(function (t) {
                 if (t.usertype == 'superuser') {
                     var superdisplay = `select * from userdata order by id`;
                     pool.query(superdisplay, (error, result) => {
@@ -143,12 +164,22 @@ app.post('/login/GoogleInterface', (req, res) => {
                         if (error)
                             res.end(error);
                         var results = { 'rows': result.rows, 'userName': t.username };
-                        res.render('pages/play', results);
+                        res.render('pages/homepages', results);
                     });
                 }
             })
         }
     });
+});
+
+//////////////////////// Go to single player games pages///////////////////////////////////
+app.post('/login/interface/singleplayer', async (req,res)=>{
+    var user = req.body.userName;
+    console.log(user);
+    var client = await pool.connect();
+    var display_score = await client.query(`select rank() over (order by score desc) rank, username, score from userdata where usertype = 'player' limit 10;`);
+    var results = {'rows': display_score.rows, 'userName': user};
+    res.render('pages/singleplayer', results);
 });
 
 // function onSignIn(googleUser) {
@@ -163,7 +194,7 @@ app.post('/signup', (req, res) => {
     res.render('pages/signup');
 });
 
-app.post('/update', async(req, res) => {
+app.post('/update', async (req, res) => {
     var name = req.body.username;
     var email = req.body.email;
     var password = req.body.password;
@@ -221,7 +252,7 @@ var transporter = nodemailer.createTransport({ //邮件传输
     }
 });
 
-app.post('/login/reset/check', async(req, res) => {
+app.post('/login/reset/check', async (req, res) => {
     var email = req.body.email;
     console.log(email);
 
@@ -238,7 +269,7 @@ app.post('/login/reset/check', async(req, res) => {
         text: 'Pleaase click link to reset password', // 存文本类型的邮件正文
         html: '<h1>Your verification code is:' + code + '</h1>' // html类型的邮件正文
     };
-    transporter.sendMail(mailOption, function(error, info) {
+    transporter.sendMail(mailOption, function (error, info) {
         if (error) {
             return console.info(error);
         } else {
@@ -268,7 +299,7 @@ app.post('/login/reset/:rows/new_password', (req, res) => {
         res.render('pages/check_email', datas)
     }
 });
-app.post('/login/reset/:rows/set_new_password', async(req, res) => {
+app.post('/login/reset/:rows/set_new_password', async (req, res) => {
     var pass = req.body.newPassword;
     console.log(pass);
     var eml = req.body.recemail;
@@ -278,7 +309,7 @@ app.post('/login/reset/:rows/set_new_password', async(req, res) => {
     var check = await client.query(`SELECT * FROM userdata WHERE email='${eml}'`);
     var checking = (check) ? check.rows : null;
     var deter = 0;
-    checking.forEach(function(t) {
+    checking.forEach(function (t) {
         if (t.password == pass)
             deter = 1;
         else
@@ -290,7 +321,7 @@ app.post('/login/reset/:rows/set_new_password', async(req, res) => {
 
 ////////////////////////////// Admin //////////////////////////////////////////////////
 //admin
-app.post('/admin/:id', (req, res) => {
+app.post('/admin/user/:id', (req, res) => {
     var deletequery = `delete from userdata where userdata.id=${req.params.id}`;
     pool.query(deletequery, (error, result) => {
         if (error)
@@ -304,52 +335,75 @@ app.post('/admin/:id', (req, res) => {
         });
     });
 });
+// for room
+app.post('/admin/rooms/:name', async (req, res) => {
+    var client = await pool.connect();
+    var deletequery = await client.query(`delete from room where name = '${req.params.name}';`);
+    var superdisplay = await client.query(`select * from userdata order by id`);
+    var superroom = await client.query(`SELECT * FROM room ORDER BY id ASC;`);
+    var results = {'rows': superdisplay.rows, 'rooms': superroom.rows};
+    setTimeout(function() {
+        res.render('pages/superuser', results);
+    }, 100)
+});
+app.post('/admin/rooms1', async (req,res)=>{
+    var client = await pool.connect();
+    var insertQuery = await client.query(`INSERT INTO room(name, person) VALUES ('${req.body.roomName}', 0)`);
+    var superdisplay = await client.query(`select * from userdata order by id`);
+    var superroom = await client.query(`SELECT * FROM room ORDER BY id ASC;`);
+    var results = {'rows': superdisplay.rows, 'rooms': superroom.rows};
+    res.render('pages/superuser', results);
+});
 ///////////////////////////// Superuser //////////////////////////////////////////////////
 //superuser
-app.post('/updateuser', function(req, res) {
-    var updatequery = `update userdata set email ='${req.body.email}', username = '${req.body.username}', password = '${req.body.password}', score = '${req.body.score}', usertype = '${req.body.usertype}' where id = ${req.body.id}`
-    pool.query(updatequery, (error, result) => {
-        if (error)
-            res.end(error);
-    });
-    var backquery = `select * from userdata order by id`;
-    setTimeout(function() {
-        pool.query(backquery, (error, result) => {
-            if (error)
-                res.end(error);
-            var results = { 'rows': result.rows };
-            res.render('pages/superuser', results)
-        })
+app.post('/superuser/updateuser', async function (req, res) {
+    var client = await pool.connect();
+    var updatequery = await client.query(`update userdata set email ='${req.body.email}', username = '${req.body.username}', password = '${req.body.password}', score = '${req.body.score}', usertype = '${req.body.usertype}' where id = ${req.body.id}`);
+    var superdisplay = await client.query(`select * from userdata order by id`);
+    var superroom = await client.query(`SELECT * FROM room ORDER BY id ASC;`);
+    var results = { 'rows': superdisplay.rows, 'rooms': superroom.rows };
+    setTimeout(function () {
+        res.render('pages/superuser', results);
     }, 100)
 });
 
-app.post('/superuser/:id', (req, res) => {
-    console.log(req.body.mod);
-    console.log(req.body.del);
+app.post('/superuser/user/:id', async (req, res) => {
+    var client = await pool.connect();
     var mode = req.body.mod;
     var dele = req.body.del;
     if (mode == 'Modify') {
-        var modifyuqery = `select * from userdata where id = ${req.params.id}`;
-        pool.query(modifyuqery, (error, result) => {
-            if (error)
-                res.end(error);
-            var results = { 'rows': result.rows };
-            res.render('pages/modify', results);
-        });
+        var modifyuqery = await client.query(`select * from userdata where id = ${req.params.id}`);
+        var results = { 'rows': result.rows };
+        res.render('pages/modify', results);
     } else if (dele == "Delete") {
-        var deletequery = `delete from userdata where userdata.id=${req.params.id}`;
-        pool.query(deletequery, (error, result) => {
-            if (error)
-                res.end(error);
-            var superdisplay = `select * from userdata order by id`;
-            pool.query(superdisplay, (error, result) => {
-                if (error)
-                    res.end(error);
-                var results = { 'rows': result.rows };
-                res.render('pages/superuser', results);
-            });
-        });
+        var deletequery = await client.query(`delete from userdata where userdata.id=${req.params.id}`);
+        var superdisplay = await client.query(`select * from userdata order by id`);
+        var superroom = await client.query(`SELECT * FROM room ORDER BY id ASC;`);
+        var results = { 'rows': superdisplay.rows, 'rooms': superroom.rows };
+        setTimeout(function () {
+            res.render('pages/superuser', results);
+        }, 100)
     }
+});
+
+// for room
+app.post('/superuser/rooms/:name', async (req, res) => {
+    var client = await pool.connect();
+    var deletequery = await client.query(`delete from room where name = '${req.params.name}';`);
+    var superdisplay = await client.query(`select * from userdata order by id`);
+    var superroom = await client.query(`SELECT * FROM room ORDER BY id ASC;`);
+    var results = {'rows': superdisplay.rows, 'rooms': superroom.rows};
+    setTimeout(function() {
+        res.render('pages/superuser', results);
+    }, 100)
+});
+app.post('/superuser/rooms1', async (req,res)=>{
+    var client = await pool.connect();
+    var insertQuery = await client.query(`INSERT INTO room(name, person) VALUES ('${req.body.roomName}', 0)`);
+    var superdisplay = await client.query(`select * from userdata order by id`);
+    var superroom = await client.query(`SELECT * FROM room ORDER BY id ASC;`);
+    var results = {'rows': superdisplay.rows, 'rooms': superroom.rows};
+    res.render('pages/superuser', results);
 });
 
 ////////////// Insert Score ///////////////////////
@@ -366,7 +420,7 @@ app.post('/login/interface/insert', (req, res) => {
                 if (error)
                     res.end(error);
                 var results = { 'rows': result.rows, 'userName': req.body.username };
-                res.render('pages/play', results);
+                res.render('pages/singleplayer', results);
             });
         }
     });
@@ -375,17 +429,17 @@ app.post('/login/interface/insert', (req, res) => {
 
 ///////////// Real time part; multiple player -- Kevin ////////////////////////////////
 var times = "first";
-app.post('/login/multiplayer', (req, res) => {
+app.post('/login/interface/multiplayer', (req, res) => {
     var getQuery = `SELECT * FROM room ORDER BY id ASC;`;
     pool.query(getQuery, (error, result) => {
         if (error)
             res.end(error);
         var results = { 'rows': result.rows, 'userName': req.body.userName, 'times': times };
-        // console.log(results);
+        console.log(results);
         res.render('pages/multiplayer', results);
     });
 });
-app.post('/login/multiplayer/room', (req, res) => {
+app.post('/login/interface/multiplayer/room', (req, res) => {
     var update = `UPDATE room SET person = person+1 WHERE name = '${req.body.room}'`;
     times = "second";
     console.log("This is user first in room: ");
@@ -396,18 +450,18 @@ app.post('/login/multiplayer/room', (req, res) => {
         res.render('pages/room', { 'room': req.body.room, 'username': req.body.user });
     });
 });
-app.post('/login/multiplayer-cache', (req, res) => {
-    if(times == "second" ){
+app.post('/login/interface/multiplayer-cache', (req, res) => {
+    if (times == "second") {
         console.log("This is user back in multiplayer: ");
         times = "first";
         console.log(times);
         var updateQuery = `UPDATE room SET person = person-1 WHERE name = '${req.body.room}';`;
-        pool.query(updateQuery, (error, result)=>{
-            if(error)
+        pool.query(updateQuery, (error, result) => {
+            if (error)
                 res.end(error);
         });
     }
-    else if(times == "first"){
+    else if (times == "first") {
         console.log("This is user first in multiplayer: ");
         console.log(times);
     }
@@ -420,6 +474,8 @@ app.post('/login/multiplayer-cache', (req, res) => {
         res.render('pages/multiplayer', results);
     });
 });
+
+
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`))
 

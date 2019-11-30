@@ -1,78 +1,94 @@
 body{
-    background-image: url("background.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    font-size: 20px;
-    text-align: center;
+  background-image: url("background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-size: 20px;
+  text-align: center;
 }
 h2{
-    text-align: center;
-    font-size: 70px;
-    margin-top: 60px;
-    margin-bottom: 0px;
-    margin-left: auto;
-    margin-right: auto;
-    color: red;
-    font-family: American Typewriter, serif;
-    text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34, 20px -40px 50px #ec760c, -20px -60px 60px #cd4606, 0 -80px 70px #973716, 10px -90px 80px #451b0e;
-  
-  }
-table{
-    width: 70%;
-    margin: auto;
-    word-wrap: break-word;
-  }
-  
-  th{
-    text-align: left;
-    height: 50px;
-    padding-left: 5px;
-    background-color: #dedada;
-  }
-  
-  td{
-    text-align: left;
-    height: 100px;
-    padding-left: 7px;
-  }
-  
-  table,th,td{
-    background-color: white;
-    margin-top: 20px;
-    margin-bottom: 50px;
-    width: 90%;
-    border: 3px #beabab solid;
-    border-collapse: collapse;
-    table-layout: fixed;
-  }
+  text-align: center;
+  font-size: 70px;
+  margin-top: 60px;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  color: red;
+  font-family: American Typewriter, serif;
+  text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34, 20px -40px 50px #ec760c, -20px -60px 60px #cd4606, 0 -80px 70px #973716, 10px -90px 80px #451b0e;
 
-  /* Write by Kevin */
-  input[id="deleteu"]{
-    background-color: #fff;
-    color: blue;
-    border: 0px none;
-    text-decoration:underline;
-    font-size: 12px;
-  }
-  input[id="deleteu"]:hover{
-    color:red;  
-    border: none;  
-    cursor: hand;  
-    cursor: pointer;  
-    text-decoration:underline; 
-  }
-  input[id="modify"]{
-    background-color: #fff;
-    color: blue;
-    border: 0px none;
-    text-decoration:underline;
-    font-size: 12px;
-  }
-  input[id="modify"]:hover{
-    color:red;  
-    border: none;  
-    cursor: hand;  
-    cursor: pointer;  
-    text-decoration:underline; 
-  }
+}
+table{
+  width: 70%;
+  margin: auto;
+  word-wrap: break-word;
+}
+
+th{
+  text-align: left;
+  height: 50px;
+  padding-left: 5px;
+  background-color: #dedada;
+}
+
+td{
+  text-align: left;
+  height: 100px;
+  padding-left: 7px;
+}
+
+table,th,td{
+  background-color: white;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  width: 90%;
+  border: 3px #beabab solid;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+/* Write by Kevin */
+input[id="deleteu"]{
+  background-color: #fff;
+  color: blue;
+  border: 0px none;
+  text-decoration:underline;
+  font-size: 12px;
+}
+input[id="deleteu"]:hover{
+  color:red;  
+  border: none;  
+  cursor: hand;  
+  cursor: pointer;  
+  text-decoration:underline; 
+}
+input[id="modify"]{
+  background-color: #fff;
+  color: blue;
+  border: 0px none;
+  text-decoration:underline;
+  font-size: 12px;
+}
+input[id="modify"]:hover{
+  color:red;  
+  border: none;  
+  cursor: hand;  
+  cursor: pointer;  
+  text-decoration:underline; 
+}
+
+div[id="room"]{
+  display: none;
+}
+div[class="homeBar"]{
+  float: left;
+}
+div[class="homeBar"]:hover{
+  color: blue;
+}
+div[class="buttonarray"]{
+  display: inline-block;
+}
+div[class="userbutton"],div[class="roombutton"]{
+  display: inline;
+}

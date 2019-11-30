@@ -27,28 +27,45 @@
                         </th>
                     </tr>
                     <% rows.forEach(function(r){ %>
-                        <tr>
-                            <td>
-                                <div class="button" onclick="into(event)" id="<%=r.name%>" value="<%=r.person%>">
-                                    <span>
-                                        <div class="name" id="RoomName"><%= r.name%></div>
-                                        <div class="person" id="Person"><p>Person: <%=r.person%> / 2</p></div>
-                                    </span>
-                                </div>
-                            </td>
-                        </tr>>
-                        <% }); %>
+                    <% if (r.person == 2){ %>
+                    <tr>
+                        <td>
+                            <div class="button" id="<%=r.name%>" value="<%=r.person%>">
+                                <span>
+                                    <div class="name" id="RoomName"><%= r.name %></div>
+                                    <div class="person" id="Person">
+                                        <p>Person: <%=r.person %> / 2</p>
+                                    </div>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <% } else { %>
+                    <tr>
+                        <td>
+                            <div class="button" onclick="into(event)" id="<%=r.name %>" value="<%=r.person %>">
+                                <span>
+                                    <div class="name" id="RoomName"><%= r.name %></div>
+                                    <div class="person" id="Person">
+                                        <p>Person: <%=r.person %> / 2</p>
+                                    </div>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <% } %>
+                    <% }); %>
                 </table>
             </div>
         </div>
         <div class="showInfo">
             <form action="/login" method="post" id="if">
-                <p class="showInfo" id="showInfo"><%=userName%></p>
+                <p class="showInfo" id="showInfo"><%=userName %></p>
                 <button id="logout" onclick="signOut();">Logout</button>
                 <script>
                     function signOut() {
                         var auth2 = gapi.auth2.getAuthInstance();
-                        auth2.signOut().then(function() {
+                        auth2.signOut().then(function () {
                             console.log('User signed out.');
                         });
                     }

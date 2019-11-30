@@ -26,7 +26,7 @@ function into(event) {
         user1.style.display = "none";
 
         temp.method = "POST";
-        temp.action = "/login/multiplayer/room";
+        temp.action = "/login/interface/multiplayer/room";
         temp.submit();
     }
 }

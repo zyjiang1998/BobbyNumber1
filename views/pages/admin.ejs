@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="/stylesheets/admin.css">
+  <script src="/js/admin.js"></script>
   <title>Welcome</title>
 </head>
 
@@ -13,29 +14,67 @@
       <button class="homeBar" name="button">Home</button>
     </div>
   </form>
-  <h2> Users Data</h2>
-  <table>
-    <tr>
-      <th>id</th>
-      <th>username</th>
-      <th>password</th>
-      <th>email</th>
-      <th>score</th>
-      <th>Modify</th>
-    </tr>
-    <% rows.forEach((r) =>{ %>
-    <tr>
-      <td><%=r.id%></td>
-      <td><%=r.username%></td>
-      <td><%=r.password%></td>
-      <td><%=r.email%></td>
-      <td><%=r.score%></td>
-      <td>
-        <form action="/admin/<%=r.id%>" method="POST"><input value="Delete" type="submit" id="deleteu"></form>
-      </td>
-      <% }); %>
-    </tr>
-  </table>
+  <div class="buttonarray">
+    <div class="userbutton" id="userbutton">
+      <button onclick="user()" id="userbutton" type="button">User</button>
+    </div>
+    <div class="roombutton" id="userbutton">
+      <button onclick="room()" id="roombutton" type="button">Room</button>
+    </div>
+  </div>
+  <div class="user" id="user">
+    <h2> Users Data</h2>
+    <table>
+      <tr>
+        <th>id</th>
+        <th>username</th>
+        <th>password</th>
+        <th>email</th>
+        <th>score</th>
+        <th>Modify</th>
+      </tr>
+      <% rows.forEach((r) =>{ %>
+      <tr>
+        <td><%=r.id%></td>
+        <td><%=r.username%></td>
+        <td><%=r.password%></td>
+        <td><%=r.email%></td>
+        <td><%=r.score%></td>
+        <td>
+          <form action="/admin/user/<%=r.id%>" method="POST"><input value="Delete" type="submit" id="deleteu"></form>
+        </td>
+        <% }); %>
+      </tr>
+    </table>
+  </div>
+  <div class="room" id="room">
+    <h2>Room Data</h2>
+    <table>
+      <tr>
+        <th>id</th>
+        <th>name</th>
+        <!-- <th>person</th> -->
+        <th>delete</th>
+      </tr>
+      <% rooms.forEach((t)=>{%>
+      <tr>
+        <td><%=t.id%></td>
+        <td><%=t.name%></td>
+        <!-- <td><%=t.person%> / 2</td> -->
+        <td>
+          <form action="/admin/rooms/<%=t.name%>" method="POST"><input type="submit" name="del" value="Delete" ,
+              id="deleteu"></form>
+        </td>
+      </tr>
+      <%});%>
+    </table>
+    <div id="createRoom">
+      <form action="/admin/rooms1" method="POST">
+        <input type="text" placeholder="Enter New Room Name" name="roomName" required>
+        <button class="roomName" type="submit">Create A New Room</button>
+      </form>
+    </div>
+  </div>
 </body>
 
 </html>
