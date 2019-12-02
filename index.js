@@ -593,7 +593,7 @@ io.on('connection',function(socket){
 
 });
 ///////////// Real time part; multiple player -- Kevin ////////////////////////////////
-app.get('/login/interface/multiplayer', (req, res) => {
+app.post('/login/interface/multiplayer', (req, res) => {
     var getQuery = `SELECT * FROM room ORDER BY id ASC;`;
     pool.query(getQuery, (error, result) => {
       if (error)

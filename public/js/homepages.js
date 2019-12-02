@@ -17,7 +17,7 @@ function func1(){
     user.style.display = "none";
     user.setAttribute("name", "userName");
     user.setAttribute("value", userName);
-    temp.method = "GET";
+    temp.method = "POST";
     temp.action = "/login/interface/multiplayer";
     temp.submit();
 }
