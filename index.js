@@ -13,7 +13,7 @@ pool = new Pool({
     //ssl: true
 });
 var app = express();
-pool.connect();
+//pool.connect();
 
 //middle wares
 app.use(express.static(path.join(__dirname, 'public')))
@@ -32,7 +32,7 @@ app.use(session({
     saveUninitialized: false, // 是否保存未初始化的会话
     cookie: {
         maxAge: 1000 * 60 * 3, // 设置 session 的有效时间，单位毫秒
-    },
+    }
 }));
 
 app.get('/', (req, res) => {
@@ -43,8 +43,6 @@ app.get('/', (req, res) => {
 //////////////// Go Back to Home//////////////////////
 app.post('/home', async (req, res) => {
     req.session.userName = null;
-    var client = await pool.connect();
-    var quite = await client.query(`\q;`);
     res.render('pages/magicMatrix');
 });
 
