@@ -84,7 +84,6 @@ function ready(){
     user1.style.display = "none";
     temp.method = "POST";
     temp.action = "/login/interface/multiplayer";
-    socket.emit('okkk',user);
     temp.submit();
     var sig = document.getElementById('room').innerHTML;
   }
