@@ -603,6 +603,16 @@ app.post('/login/interface/multiplayer', (req, res) => {
       res.render('pages/multiplayer', results);
     });
 });
+app.get('/login/interface/multiplayer', (req, res) => {
+    var getQuery = `SELECT * FROM room ORDER BY id ASC;`;
+    pool.query(getQuery, (error, result) => {
+      if (error)
+      res.end(error);
+      var results = { 'rows': result.rows, 'userName': req.body.userName};
+      // console.log(results);
+      res.render('pages/multiplayer', results);
+    });
+});
 app.post('/login/interface/multiplayer/room', (req, res) => {
     console.log(req.body.user);
     res.render('pages/room', { 'room': req.body.room, 'username': req.body.user });
