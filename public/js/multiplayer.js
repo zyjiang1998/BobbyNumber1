@@ -7,7 +7,7 @@ function into(event) {
     var person = i.getAttribute("value");
     console.log(person);
     if (person == 2) {
-        document.getElementById("Person").style.color = 'red';
+        // document.getElementById("Person").style.color = 'red';
         event.preventDefault();
     }
     else {

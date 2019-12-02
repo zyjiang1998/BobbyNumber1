@@ -22,14 +22,16 @@ app.use(express.urlencoded({ extended: false }));
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
-app.use(bodyparser.json()); 
+server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+
+app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(session({
-    secret : 'secret', // 对session id 相关的cookie 进行签名
-    resave : true,
+    secret: 'secret', // 对session id 相关的cookie 进行签名
+    resave: true,
     saveUninitialized: false, // 是否保存未初始化的会话
-    cookie : {
-        maxAge : 1000 * 60 * 3, // 设置 session 的有效时间，单位毫秒
+    cookie: {
+        maxAge: 1000 * 60 * 3, // 设置 session 的有效时间，单位毫秒
     },
 }));
 
@@ -96,6 +98,7 @@ app.post('/login/interface', async (req, res) => {
             } else {
                 if (req.body.passWord == t.password) {
                     req.session.userName = user;
+                    console.log(req.session.userName);
                     var display_score = `select rank() over (order by score desc) rank, username, score from userdata where usertype = 'player' limit 10;`;
                     //`select RANK() OVER(order by score desc) rank, username, score from userdata`
                     pool.query(display_score, (error, result) => {
@@ -116,7 +119,6 @@ app.post('/login/interface', async (req, res) => {
         res.render('pages/login', determines);
     }
 });
-
 app.post('/login/GoogleInterface', (req, res) => {
     var user = req.body.user;
     var email = req.body.email;
@@ -173,12 +175,12 @@ app.post('/login/GoogleInterface', (req, res) => {
 });
 
 //////////////////////// Go to single player games pages///////////////////////////////////
-app.post('/login/interface/singleplayer', async (req,res)=>{
+app.post('/login/interface/singleplayer', async (req, res) => {
     var user = req.body.userName;
     console.log(user);
     var client = await pool.connect();
     var display_score = await client.query(`select rank() over (order by score desc) rank, username, score from userdata where usertype = 'player' limit 10;`);
-    var results = {'rows': display_score.rows, 'userName': user};
+    var results = { 'rows': display_score.rows, 'userName': user };
     res.render('pages/singleplayer', results);
 });
 
@@ -341,17 +343,17 @@ app.post('/admin/rooms/:name', async (req, res) => {
     var deletequery = await client.query(`delete from room where name = '${req.params.name}';`);
     var superdisplay = await client.query(`select * from userdata order by id`);
     var superroom = await client.query(`SELECT * FROM room ORDER BY id ASC;`);
-    var results = {'rows': superdisplay.rows, 'rooms': superroom.rows};
-    setTimeout(function() {
+    var results = { 'rows': superdisplay.rows, 'rooms': superroom.rows };
+    setTimeout(function () {
         res.render('pages/superuser', results);
     }, 100)
 });
-app.post('/admin/rooms1', async (req,res)=>{
+app.post('/admin/rooms1', async (req, res) => {
     var client = await pool.connect();
-    var insertQuery = await client.query(`INSERT INTO room(name, person) VALUES ('${req.body.roomName}', 0)`);
+    var insertQuery = await client.query(`INSERT INTO room(name, person, player1, player2, gaming) VALUES ('${req.body.roomName}', 0, '', '', 'not')`);
     var superdisplay = await client.query(`select * from userdata order by id`);
     var superroom = await client.query(`SELECT * FROM room ORDER BY id ASC;`);
-    var results = {'rows': superdisplay.rows, 'rooms': superroom.rows};
+    var results = { 'rows': superdisplay.rows, 'rooms': superroom.rows };
     res.render('pages/superuser', results);
 });
 ///////////////////////////// Superuser //////////////////////////////////////////////////
@@ -392,17 +394,17 @@ app.post('/superuser/rooms/:name', async (req, res) => {
     var deletequery = await client.query(`delete from room where name = '${req.params.name}';`);
     var superdisplay = await client.query(`select * from userdata order by id`);
     var superroom = await client.query(`SELECT * FROM room ORDER BY id ASC;`);
-    var results = {'rows': superdisplay.rows, 'rooms': superroom.rows};
-    setTimeout(function() {
+    var results = { 'rows': superdisplay.rows, 'rooms': superroom.rows };
+    setTimeout(function () {
         res.render('pages/superuser', results);
     }, 100)
 });
-app.post('/superuser/rooms1', async (req,res)=>{
+app.post('/superuser/rooms1', async (req, res) => {
     var client = await pool.connect();
-    var insertQuery = await client.query(`INSERT INTO room(name, person) VALUES ('${req.body.roomName}', 0)`);
+    var insertQuery = await client.query(`INSERT INTO room(name, person, player1, player2, gaming) VALUES ('${req.body.roomName}', 0, '', '', 'not')`);
     var superdisplay = await client.query(`select * from userdata order by id`);
     var superroom = await client.query(`SELECT * FROM room ORDER BY id ASC;`);
-    var results = {'rows': superdisplay.rows, 'rooms': superroom.rows};
+    var results = { 'rows': superdisplay.rows, 'rooms': superroom.rows };
     res.render('pages/superuser', results);
 });
 
@@ -425,60 +427,207 @@ app.post('/login/interface/insert', (req, res) => {
         }
     });
 });
+app.post('/login/interface/end', (req,res)=>{
+    console.log(req.body.score);
+    console.log(req.body.username);
+    var insertQuery = `UPDATE userdata SET score = ${req.body.score} WHERE username = '${req.body.username}';`;
+    pool.query(insertQuery, (error, result) => {
+        if (error)
+            res.end(error);
+        if (result.rowCount != 0) {
+            var results = { 'userName': req.body.username };
+            res.render('pages/homepages', results);
+        }
+    });
+});
 
+///////////// Real time part; multiple player -- Allen ////////////////////////////////
+const io = require('socket.io')(server)
+io.on('connection',function(socket){
+  socket.on('user',function(na,ra){
+    var x = na;
+    io.emit('user',x,ra);
+  })
+  socket.on('ops',function(ras,nms){
+    socket.on('room',function(ras,nm){
+      var show = `SELECT * FROM room WHERE name ='${ras}'`;
+      pool.query(show, (error, result) => {
+        if (error)
+        res.end(error);
+        var p = result.rows[0].person;
+        var p1 = result.rows[0].player1;
+        var p2 = result.rows[0].player2;
 
+        if(p != 2){
+          var update = `UPDATE room SET person = person+1 WHERE name = '${ras}'`;
+          pool.query(update, (error, result) => {
+            if (error)
+            res.end(error);
+            if(p1 == ''){
+              var player = `UPDATE room SET player1 = '${nm}' WHERE name = '${ras}'`;
+              pool.query(player,(error,result) => {
+                if(error)
+                res.end(error)
+              })
+            }
+            else if(p2 == ''){
+              var player = `UPDATE room SET player2 = '${nm}' WHERE name = '${ras}'`;
+              pool.query(player,(error,result) => {
+                if(error)
+                res.end(error)
+              })
+            }
+            var show = `SELECT * FROM room WHERE name ='${ras}'`;
+            pool.query(show, (error, result) => {
+              if (error)
+              res.end(error);
+              var results = result.rows[0].person;
+              if(results == 2){
+                var show = `SELECT * FROM room WHERE name ='${ras}'`;
+                pool.query(show, (error, result) => {
+                  if (error)
+                  res.end(error);
+                  var a = result.rows[0].player1;
+                  var b = result.rows[0].player2;
+                  io.emit('lookme',ras,a,b);
+                });
+              }
+              io.emit('warn',ras,results);
+            });
+          });
+        }
+      });
+    });
+    socket.on('disconnect',function(){
+      var check = `SELECT * FROM room WHERE name = '${ras}'`;
+      pool.query(check,(error,result)=>{
+        if(error)
+        res.end(error);
+        var p1 = result.rows[0].player1;
+        var p2 = result.rows[0].player2;
+        var p3 = result.rows[0].gaming;
+        if(p3 == 'not'){
+        if(p1 == nms){
+          var deletes = `UPDATE room SET player1 = '' WHERE name = '${ras}'`;
+          pool.query(deletes, (error,result) =>{
+            if(error)
+            res.end(error);
+          })
+        }
+        if(p2 == nms){
+          var deletes = `UPDATE room SET player2 = '' WHERE name = '${ras}'`;
+          pool.query(deletes, (error,result) =>{
+            if(error)
+            res.end(error);
+          })
+        }
+        var updateQuery = `UPDATE room SET person = person-1 WHERE name = '${ras}';`;
+        pool.query(updateQuery, (error, result)=>{
+          if(error)
+          res.end(error);
+          var show = `SELECT * FROM room WHERE name ='${ras}'`;
+          pool.query(show, (error, result) => {
+            if (error)
+            res.end(error);
+            var o = result.rows[0].person;
+            io.emit('warn',ras,o);
+            io.emit('reset',ras);
+          });
+        });
+      }
+      })
+
+    })
+    socket.on('player is ready',function(ras,nm){
+      io.emit('tell',ras,nm);
+      socket.on('start',function(ras,nm){
+        var updateQuery = `UPDATE room SET gaming = 'in' WHERE name = '${ras}';`;
+        pool.query(updateQuery,(error,result)=>{
+          if(error)
+            res.end(error);
+        })
+        io.emit('go',ras);
+      })
+    })
+  })
+  socket.on('math',function(room,name){
+    socket.on('disconnect',function(){
+      var cc = `SELECT * FROM room WHERE name = '${room}';`;
+      pool.query(cc,(error,result)=>{
+        if(error)
+        res.end(error)
+        if(result.rows[0].person == 2){
+          var q1 = `UPDATE room SET person = person-2 WHERE name = '${room}';`;
+          pool.query(q1, (error, result)=>{
+            if(error)
+            res.end(error);
+          });
+        }
+      })
+      var updateQuery = `UPDATE room SET gaming = 'not' WHERE name = '${room}';`;
+      pool.query(updateQuery,(error,result)=>{
+        if(error)
+          res.end(error);
+      })
+      var q2 = `UPDATE room SET player1 = '',player2 = '' WHERE name = '${room}';`;
+      pool.query(q2, (error, result)=>{
+        if(error)
+        res.end(error);
+        var cc = `SELECT * FROM room WHERE name = '${room}';`;
+        pool.query(cc,(error,result)=>{
+          if(error)
+          res.end(error)
+            io.emit('warn',room,result.rows[0].person);
+        });
+        io.emit('jump',name);
+        io.emit('send',room);
+      });
+    })
+  })
+  socket.on('score',function(rmif,own,score){
+    io.emit('this',rmif,own,score);
+  })
+  socket.on('winner',function(rmif,own,score){
+    io.emit('that',rmif,own,score);
+  })
+
+});
 ///////////// Real time part; multiple player -- Kevin ////////////////////////////////
-var times = "first";
 app.post('/login/interface/multiplayer', (req, res) => {
     var getQuery = `SELECT * FROM room ORDER BY id ASC;`;
     pool.query(getQuery, (error, result) => {
-        if (error)
-            res.end(error);
-        var results = { 'rows': result.rows, 'userName': req.body.userName, 'times': times };
-        console.log(results);
-        res.render('pages/multiplayer', results);
+      if (error)
+      res.end(error);
+      var results = { 'rows': result.rows, 'userName': req.body.userName};
+      // console.log(results);
+      res.render('pages/multiplayer', results);
     });
 });
 app.post('/login/interface/multiplayer/room', (req, res) => {
-    var update = `UPDATE room SET person = person+1 WHERE name = '${req.body.room}'`;
-    times = "second";
-    console.log("This is user first in room: ");
-    console.log(times);
-    pool.query(update, (error, result) => {
-        if (error)
-            res.end(error);
-        res.render('pages/room', { 'room': req.body.room, 'username': req.body.user });
-    });
+    console.log(req.body.user);
+    res.render('pages/room', { 'room': req.body.room, 'username': req.body.user });
 });
-app.post('/login/interface/multiplayer-cache', (req, res) => {
-    if (times == "second") {
-        console.log("This is user back in multiplayer: ");
-        times = "first";
-        console.log(times);
-        var updateQuery = `UPDATE room SET person = person-1 WHERE name = '${req.body.room}';`;
-        pool.query(updateQuery, (error, result) => {
-            if (error)
-                res.end(error);
-        });
-    }
-    else if (times == "first") {
-        console.log("This is user first in multiplayer: ");
-        console.log(times);
-    }
-    var getQuery = `SELECT * FROM room ORDER BY id ASC;`;
-    pool.query(getQuery, (error, result) => {
-        if (error)
-            res.end(error);
-        var results = { 'rows': result.rows, 'userName': req.body.userName, 'times': times };
-        // console.log(results);
-        res.render('pages/multiplayer', results);
-    });
+app.post('/login/interface/multiplayer/room/start',(req,res)=>{
+    var getOP = `SELECT * FROM room WHERE name = '${req.body.rooom}'`;
+    pool.query(getOP, (error,result)=>{
+      if(error)
+        res.end(error)
+      var p1 = result.rows[0].player1;
+      var p2 = result.rows[0].player2;
+      var opp;
+      if(p1 == req.body.userr)
+        opp = p2;
+      else {
+        opp = p1;
+      }
+      var results = {'rooom':req.body.rooom,'opp':opp,'p':req.body.userr};
+      res.render('pages/battle',results);
+    })
 });
-
-
-
-app.listen(PORT, () => console.log(`Listening on ${PORT}`))
-
+app.post('/login/interface/homepages', (req,res)=>{
+    var results = { 'userName': req.body.userName };
+    res.render('pages/homepages', results);
+});
 
 
 
@@ -491,8 +640,9 @@ app.listen(PORT, () => console.log(`Listening on ${PORT}`))
 //INSERT INTO userdata(email, username, password, score, usertype) VALUES('andylin5330@gmail.com', 'andy', '123456', 0, 'admin');
 //INSERT INTO userdata(email, username, password, score, usertype) VALUES('jiangjack3@gmail.com', 'jack', '123456', 0, 'admin');
 
-// CREATE TABLE room(id serial, name varchar(50), person int, CHECK (person >= 0), CHECK (person <3));
-// INSERT INTO room(name, person) VALUES ('test', 0);
-// INSERT INTO room(name, person) VALUES ('test1', 0);
-// INSERT INTO room(name, person) VALUES ('test2', 0);
-// INSERT INTO room(name, person) VALUES ('test3', 0);
+// CREATE TABLE room(id serial, name varchar(50), person int, player1 varchar(50), player2 varchar(50), CHECK (person >= 0), CHECK (person <3));
+// INSERT INTO room(name, person, player1, player2) VALUES ('test1', 0, '', '');
+// INSERT INTO room(name, person, player1, player2) VALUES ('test2', 0, '', '');
+// INSERT INTO room(name, person, player1, player2) VALUES ('test3', 0, '', '');
+// INSERT INTO room(name, person, player1, player2) VALUES ('test4', 0, '', '');
+// INSERT INTO room(name, person, player1, player2) VALUES ('test5', 0, '', '');

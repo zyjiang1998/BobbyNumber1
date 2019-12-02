@@ -12,6 +12,10 @@
 
 <body>
     <div class="container">
+        <div class="loggedinAlert" id="loggedinAlert">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            Player has logged in!.
+        </div>
         <h1>Magic Matrix Home Page</h1>
         <div class="box-1" id="box-1">
             <div class="multiplayer" onclick="func1()">
@@ -22,7 +26,7 @@
             </div>
         </div>
         <div class="showInfo">
-            <form action="/login" method="post" id="if">
+            <form action="/login" method="post" id="iff">
                 <p class="showInfo"><%=userName%></p>
                 <button id="logout" onclick="signOut();">Logout</button>
                 <script>

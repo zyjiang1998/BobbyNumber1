@@ -8,10 +8,6 @@
 </head>
 
 <body>
-  <div class="loggedinAlert" id="loggedinAlert">
-    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-    Player has logged in!.
-  </div>
   <div class="total">
     <button id = "good" style="display: none; position: fixed;" onclick=" over()">show the leaderboard</button>
     <script>
@@ -69,7 +65,7 @@
 
     <!-- Andy -->
     <div class="showInfo">
-      <form action="/login" method="post" id="if">
+      <form action="/login" method="post" id="iff">
         <p class="showInfo"><%=userName%></p>
         <button id="logout" onclick="signOut();">Logout</button>
         <script>
@@ -87,6 +83,5 @@
   <!-- Andy -->
 
 </body>
-<script src="/js/play.js"></script>
 
 </html>

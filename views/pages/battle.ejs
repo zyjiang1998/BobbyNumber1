@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Battle room</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/multigame.css">
+  </head>
+  <body>
+    <div class="pr">
+    <div class = "if">Wlecome to: <p id = "room" style="display:inline-block;"><%=rooom%></p></div>
+    <div class="showInfo">
+        <form action="/login" method="post" id="iff">
+            <p class="showInfo" id="player" ><%=p%></p>
+            <button id="logout" onclick="signOut();">Logout</button>
+            <script>
+                function signOut() {
+                    var auth2 = gapi.auth2.getAuthInstance();
+                    auth2.signOut().then(function () {
+                        console.log('User signed out.');
+                    });
+                }
+            </script>
+        </form>
+    </div>
+    <div class = "if">Your opponent is:  <p id = "opponent" style="display:inline-block;"><%=opp%></p></div>
+    <div class = "if">Your score is:  <p id = "score1" style="display:inline-block;">0</p></div>
+    <div class = "if">Your opponent score is:  <p id = "score2" style="display:inline-block;">0</p></div>
+    </div>
+    <script type="text/javascript">
+      var socket = io.connect('https://bobbysohandsome.herokuapp.com/');
+      var room = document.getElementById('room').innerHTML;
+      var names = document.getElementById('player').innerHTML;
+      socket.emit('math',room,names);
+      socket.on('jump',function(name){
+        var temp = document.createElement("form");
+        document.body.appendChild(temp);
+        var user1 = document.createElement("input");
+        temp.appendChild(user1);
+        user1.setAttribute("name", "userName");
+        user1.setAttribute("value", names);
+        user1.style.display = "none";
+        temp.method = "POST";
+        temp.action = "/login/interface/multiplayer";
+        temp.submit();
+      })
+      socket.on('this',function(rmif,own,score){
+        if(rmif == room){
+          if(own == names){
+            document.getElementById('score1').innerHTML = score;
+            console.log(document.getElementById('score1').innerHTML);
+          }
+          else{
+            document.getElementById('score2').innerHTML = score;
+            console.log(document.getElementById('score2').innerHTML);
+          }
+        }
+      })
+    </script>
+    <div class="bodyGame">
+      <div class="box" id="box">
+        <div class="cp">
+          <p class="game"></p>
+          <p class="game"></p>
+          <p class="game"></p>
+        </div>
+        <button type="button" name="button" id="button">Click me</button>
+        <div class="reset"></div>
+        <div class="reset"></div>
+        <button type="button" name="button" id="button2">Next</button>
+        <table id="matrix">
+        </table>
+        <button type="button" name="button" id="button1" style="display: none;">Play Again!</button>
+        <button type="button" name="button" id="button3" style="display: none;">Submit <p id="user" style="display:none;"></p> Score.</button>
+      </div>
+      <script src="/js/multigame.js"></script>
+    </div>
+  </body>
+</html>

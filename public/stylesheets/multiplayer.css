@@ -29,11 +29,12 @@ th {
     height: 50px;
     padding-left: 5px;
     background-color: #dedada;
+    font-size: 24px;
 }
 
 td {
     text-align: left;
-    height: 100px;
+    height: auto;
     padding-left: 7px;
 }
 
@@ -43,63 +44,73 @@ td {
     background-color: white;
     margin-top: 20px;
     margin-bottom: 50px;
-    width: 90%;
+    width: 70%;
     border: 3px #beabab solid;
     border-collapse: collapse;
     table-layout: fixed;
+    text-align: center;
 }
 
 div[class="button"] {
-    width: 200px;
-    height: 50px;
+    width: 400px;
+    height: 80px;
     border: black, solid, 2px;
-    border-radius: 2px;
+    border-radius: 8px;
     background-color: rgb(115, 149, 241);
+    font: 20px black;
+    font-weight: 700;
+    margin: 20px auto;
+    padding: 5px;
     text-align: center;
     justify-content: center;
     display: flex;
 }
-div[class="name"], div[class="person"]{
-    display: inline-block;
-    float: left;
+div[class="name"]{
+  margin: 10px auto;
+  height: 24px;
+  text-transform: capitalize;
+}
+div[class="person"]{
+  margin: 10px auto;
+  height: 24px;
 }
 
 div.loggedin{
-    position: relative;
-    width:100px;
-    height:100px;
-    border-radius:50px;
-    }
-  
-  div.showInfo{
-    position: fixed;
-    justify-content: center;
-    left:90%;
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #0097a7;
-    border-radius: 10px;
-    display: inline-block;
-    text-align: center;
-    width: auto;
-    height: auto;
-    max-width: 20%;
+  position: relative;
+  width:100px;
+  height:100px;
+  border-radius:50px;
   }
-  form[id="if"]{
-    text-align: center;
-    justify-content: center;
-  }
-  p.showInfo{ 
-    color: white;
-    margin: 5px auto;
-  }
-  
-  button[id="logout"]{
-    margin: 7px 7px 10px 7px;
-    border-radius: 8px;
-  }
-  button[id="logout"]:hover{
-    margin: 7px 7px 10px 7px;
-    background-color: #0097a7;
-    color: white;
-    border-radius: 8px;
-  }
+div.showInfo{
+position: fixed;
+justify-content: center;
+right:10px;
+top: 0px;
+font-family: Arial, Helvetica, sans-serif;
+background-color: #0097a7;
+border-radius: 10px;
+text-align: center;
+width: auto;
+height: auto;
+max-width: 30%;
+}
+form[id="iff"]{
+text-align: center;
+justify-content: center;
+}
+p.showInfo{
+font-size: 10px;
+color: white;
+margin: 5px auto;
+}
+
+button[id="logout"]{
+margin: 7px 7px 10px 7px;
+border-radius: 8px;
+}
+button[id="logout"]:hover{
+margin: 7px 7px 10px 7px;
+background-color: #0097a7;
+color: white;
+border-radius: 8px;
+}

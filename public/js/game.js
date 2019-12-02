@@ -281,29 +281,26 @@ function start() {
 document.getElementById("button1").addEventListener('click', restart);
 document.getElementById("button3").addEventListener('click', recode);
 
-function restart() {
-  rrr++;
-  level_test = 0;
-  last_level = 0;
-  passpoint = 0;
-  count = 0;
-  times = 0;
-  tails = 0;
-  score = 0;
-  wrong = 0;
-  before_score = 0;
-  wrong_flag = 0;
-  var parent = document.getElementById('matrix');
-  var child = document.getElementsByTagName('tbody');
-  parent.removeChild(child[1]);
-  document.getElementsByClassName("reset")[0].innerHTML = "&nbsp;";
-  document.getElementById("button1").style.display = "none";
-  document.getElementById("button3").style.display = "none";
-  start();
-}
 
 var flag = 0;
-function recode() {
+function restart() {
+  // rrr++;
+  // level_test = 0;
+  // last_level = 0;
+  // passpoint = 0;
+  // count = 0;
+  // times = 0;
+  // tails = 0;
+  // score = 0;
+  // wrong = 0;
+  // before_score = 0;
+  // wrong_flag = 0;
+  // var parent = document.getElementById('matrix');
+  // var child = document.getElementsByTagName('tbody');
+  // parent.removeChild(child[1]);
+  document.getElementsByClassName("reset")[0].innerHTML = "&nbsp;";
+
+
   var comp = document.getElementById("oldScore").innerHTML;
   console.log(comp);
   if (flag == 0 && comp > score) {
@@ -328,6 +325,39 @@ function recode() {
     local.style.display = "none";
     temp.method = "POST";
     temp.action = "/login/interface/insert";
+    temp.submit();
+    document.getElementById("button1").style.display = "none";
+    document.getElementById("button3").style.display = "none";
+    // start();
+  }
+}
+
+
+function recode() {
+  var comp = document.getElementById("oldScore").innerHTML;
+  console.log(comp);
+  if (flag == 0 && comp > score) {
+    window.alert("Your rank is greater than your current Score. Do you really want to record ?");
+    event.preventDefault();
+    flag = 1;
+  }
+  else {
+    var temp = document.createElement("form");
+    document.body.appendChild(temp);
+    var insert = document.createElement("input");
+    var local = document.createElement("input");
+    temp.appendChild(insert);
+    temp.appendChild(local);
+    insert.setAttribute("name", "score");
+    local.setAttribute("name", "username");
+    insert.setAttribute("value", score);
+    var nam = document.getElementById("user").innerHTML;
+    console.log(nam);
+    local.setAttribute("value", nam);
+    insert.style.display = "none";
+    local.style.display = "none";
+    temp.method = "POST";
+    temp.action = "/login/interface/end";
     temp.submit();
   }
 }

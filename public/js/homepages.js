@@ -1,3 +1,12 @@
+var logAlert=document.getElementById('loggedinAlert');
+
+window.addEventListener('click',outsideClick);
+
+function outsideClick(e){
+    if(e.target!=logAlert){
+    loggedinAlert.style.display ='none';
+    }
+}
 function func1(){
     var userName = document.getElementsByClassName("showInfo")[1].innerHTML;
     

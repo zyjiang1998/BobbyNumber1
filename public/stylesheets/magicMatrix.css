@@ -194,3 +194,17 @@ button[name="button"]:hover:before {
       transform: skewX(-45deg) translateX(15em);
      transition: all 0.5s ease-in-out;
 }
+
+.fb-share-button{
+  position:relative;
+  top:220px;
+  left:820px;
+  display: inline-block;
+}
+
+.twitter{
+  position:relative;
+  top:198px;
+  left:900px;
+  display: block;
+}

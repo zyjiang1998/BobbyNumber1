@@ -2,36 +2,51 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="/js/room.js"></script>
-    <title>ROOM</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/stylesheets/room.css">
+  <title>ROOM</title>
+  <script src="/socket.io/socket.io.js"></script>
 </head>
 
 <body>
-    <div class="container">
-        <div class="box-1">
-            <h2 id="room"><%=room%></h2>
-        </div>
-        <div class="backButton">
-            <button class="button" onclick="back()">Exit Room</button>
-        </div>
+  <div class="body">
+    <div class="box-1">
+      <h2 id="room"><%=room%></h2>
     </div>
     <div class="showInfo">
-        <form action="/login" method="post" id="if">
-            <p class="showInfo" id="showInfo"><%=username%></p>
-            <button id="logout" onclick="signOut();">Logout</button>
-            <script>
-                function signOut() {
-                    var auth2 = gapi.auth2.getAuthInstance();
-                    auth2.signOut().then(function () {
-                        console.log('User signed out.');
-                    });
-                }
-            </script>
+        <form action="/login" method="post" id="iff">
+          <p class="showInfo" id="showInfo"><%=username%></p>
+          <button id="logout" onclick="signOut();">Logout</button>
+          <script>
+            function signOut() {
+              var auth2 = gapi.auth2.getAuthInstance();
+              auth2.signOut().then(function () {
+                console.log('User signed out.');
+              });
+            }
+          </script>
         </form>
+      </div>
+    <div class="main">
+      <p id="display">&nbsp;&nbsp;&nbsp;&nbsp;</p>
+      <p id="p1">Player1 is not ready</p>
+      <p id="p2">Player2 is not ready</p>
+      <div class="box-2">
+        <p id="match" style="color: red"><strong>Waitng for Your Opponent</strong></p>
+        <div class="buttonArray">
+          <div class="backButton">
+            <button class="button" onclick="back()">Exit Room</button>
+          </div>
+          <div class="ready button" id="pbutton">
+            <button type="button" id="play" name="button" onclick="ready()" style="display:none;">Ready</button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+  <script src="/js/room.js"></script>
 </body>
 
 </html>

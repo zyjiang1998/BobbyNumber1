@@ -7,60 +7,21 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="/stylesheets/multiplayer.css">
     <script src="/js/multiplayer.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <title>Multiplayer Games</title>
 </head>
 
 <body>
+    <script src="/socket.io/socket.io.js"></script>
     <div class="container">
         <form action="/home" method="POST">
             <div class="homeBar">
                 <button class="homeBar" name="button">Home</button>
             </div>
         </form>
-        <div class="box-1">
-            <h2> Rooms:</h2>
-            <div class="box-room">
-                <table>
-                    <tr>
-                        <th>
-                            <h3>Room Name</h2>
-                        </th>
-                    </tr>
-                    <% rows.forEach(function(r){ %>
-                    <% if (r.person == 2){ %>
-                    <tr>
-                        <td>
-                            <div class="button" id="<%=r.name%>" value="<%=r.person%>">
-                                <span>
-                                    <div class="name" id="RoomName"><%= r.name %></div>
-                                    <div class="person" id="Person">
-                                        <p>Person: <%=r.person %> / 2</p>
-                                    </div>
-                                </span>
-                            </div>
-                        </td>
-                    </tr>
-                    <% } else { %>
-                    <tr>
-                        <td>
-                            <div class="button" onclick="into(event)" id="<%=r.name %>" value="<%=r.person %>">
-                                <span>
-                                    <div class="name" id="RoomName"><%= r.name %></div>
-                                    <div class="person" id="Person">
-                                        <p>Person: <%=r.person %> / 2</p>
-                                    </div>
-                                </span>
-                            </div>
-                        </td>
-                    </tr>
-                    <% } %>
-                    <% }); %>
-                </table>
-            </div>
-        </div>
         <div class="showInfo">
-            <form action="/login" method="post" id="if">
-                <p class="showInfo" id="showInfo"><%=userName %></p>
+            <form action="/login" method="post" id="iff">
+                <p class="showInfo" id="showInfo"><%=userName%></p>
                 <button id="logout" onclick="signOut();">Logout</button>
                 <script>
                     function signOut() {
@@ -71,6 +32,55 @@
                     }
                 </script>
             </form>
+        </div>
+        <script type="text/javascript">
+            var socket = io.connect('https://bobbysohandsome.herokuapp.com/');
+            window.onload = function () {
+                //considering there aren't any hashes in the urls already
+                if (!window.location.hash) {
+                    //setting window location
+                    window.location = window.location + '#loaded';
+                    //using reload() method to reload web page
+                    window.location.reload();
+                }
+            }
+
+            socket.on('warn', function (room, person) {
+                var temp = document.getElementById(room).childNodes[1].childNodes[3].childNodes[1];
+                temp.innerHTML = "Person: " + person + " / 2";
+                console.log(temp);
+                if(person == 2){
+                    document.getElementById(room).childNodes[1].childNodes[3].style.color = 'red';
+                }
+                else{
+                    document.getElementById(room).childNodes[1].childNodes[3].style.color = 'black';
+                }
+                var temp1 = document.getElementById(room).setAttribute('value', person);
+            })
+
+
+        </script>
+        <div class="box-1">
+            <h2> Rooms:</h2>
+            <div class="box-room">
+                <table>
+                    <th>Room name</th>
+                    <% rows.forEach(function(r){ %>
+                    <tr>
+                        <td>
+                            <div class="button" onclick="into(event)" id="<%=r.name%>" value="<%=r.person%>">
+                                <span>
+                                    <div class="name" id="RoomName"><%= r.name%></div>
+                                    <div class="person" id="Person">
+                                        <p>Person: <%=r.person%> / 2</p>
+                                    </div>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <% }); %>
+                </table>
+            </div>
         </div>
     </div>
 </body>

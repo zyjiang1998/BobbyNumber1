@@ -1,0 +1,107 @@
+body {
+    background-image: url("background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-width: 70%;
+}
+div[class="box-1"]{
+    text-align: center;
+    justify-content: center;
+    width:80%;
+    margin:5px auto;
+}
+h2[id="room"]{
+    font-family: "times new roman", times, serif;
+    font-size: 60px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    color: #e0dfdc;
+    letter-spacing: .1em;
+    text-shadow: 0 -1px 0 #fff, 0 1px 0 #2e2e2e, 0 2px 0 #2c2c2c, 0 3px 0 #2a2a2a, 0 4px 0 #282828, 0 5px 0 #262626, 0 6px 0 #242424, 0 7px 0 #222, 0 8px 0 #202020, 0 9px 0 #1e1e1e, 0 10px 0 #1c1c1c, 0 11px 0 #1a1a1a, 0 12px 0 #181818, 0 13px 0 #161616, 0 14px 0 #141414, 0 15px 0 #121212, 0 22px 30px rgba(0,0,0,0.9);
+}
+div[class="main"]{
+    text-align: center;
+    font-size: 30px;
+    color: white;
+}
+div[class="box-2"]{
+    background-color: #F2F1D7;
+    border-radius: 12px;
+    width: 350px;
+    height: 250px;
+    margin: auto;
+    padding-top: 60px;
+}
+div[class="buttonArray"]{
+    display: inline-block;
+}
+div[class="backButton"], div[class="ready button"]{
+    display: block;
+    float: left;
+}
+div[class="backButton"]{
+    margin-right: 20px;
+}
+button[class="button"]{
+    border-radius: 5px;
+    width: 120px;
+    height: 50px;
+}
+button[class="button"]:hover{
+    background-color: skyblue;
+    color: white;
+}
+div[class="ready button"]{
+    margin-left: 7px;
+}
+button[id="play"]{
+    border-radius: 5px;
+    width: 120px;
+    height: 50px;
+}
+button[id="play"]:hover{
+    background-color: skyblue;
+    color: white;
+}
+
+div.loggedin{
+    position: relative;
+    width:100px;
+    height:100px;
+    border-radius:50px;
+    }
+div.showInfo{
+  position: fixed;
+  justify-content: center;
+  right:10px;
+  top: 0px;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #0097a7;
+  border-radius: 10px;
+  text-align: center;
+  width: auto;
+  height: auto;
+  max-width: 30%;
+}
+form[id="iff"]{
+  text-align: center;
+  justify-content: center;
+}
+p.showInfo{
+  font-size: 10px;
+  color: white;
+  margin: 5px auto;
+}
+
+button[id="logout"]{
+  margin: 7px 7px 10px 7px;
+  border-radius: 8px;
+}
+button[id="logout"]:hover{
+  margin: 7px 7px 10px 7px;
+  background-color: #0097a7;
+  color: white;
+  border-radius: 8px;
+}

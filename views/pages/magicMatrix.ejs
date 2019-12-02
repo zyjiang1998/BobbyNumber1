@@ -1,39 +1,53 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/magicMatrix.css">
-    <title> Home</title>
-  </head>
-  <body>
-    <h1 class="name">Magic Matrix</h1>
-    <div class="matrix">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/magicMatrix.css">
+  <title> Home</title>
+</head>
+
+<body>
+  <h1 class="name">Magic Matrix</h1>
+  <div class="matrix">
     <div class="box-1">
-     <div class="canvas1"></div>
-     <div class="canvas2"></div>
-     <div class="canvas3"></div>
-     <div class="canvas4"></div>
-     <div class="canvas5"></div>
-     <div class="canvas6"></div>
-     <div class="canvas7"></div>
-     <div class="canvas8"></div>
-     <div class="canvas9"></div>
+      <div class="canvas1"></div>
+      <div class="canvas2"></div>
+      <div class="canvas3"></div>
+      <div class="canvas4"></div>
+      <div class="canvas5"></div>
+      <div class="canvas6"></div>
+      <div class="canvas7"></div>
+      <div class="canvas8"></div>
+      <div class="canvas9"></div>
     </div>
   </div>
-    <div id="box-2">
-      <form action="/tutorial" method="POST">
-        <button id="tutorial" name="button">Tutorial</button>
-      </form>
-      <form action ="/login" method ="POST">
-        <button id="loginClick" class = "login" name="button">Play</button>
-      </form>
-        
+  <div id="box-2">
+    <form action="/tutorial" method="POST">
+      <button id="tutorial" name="button">Tutorial</button>
+    </form>
+    <form action="/login" method="POST">
+      <button id="loginClick" class="login" name="button">Play</button>
+    </form>
+
+  </div>
+  <div id="fb-root">
+    <script async defer crossorigin="anonymous"
+      src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v5.0"></script>
+    <div class="fb-share-button" data-href="https://bobbysohandsome.herokuapp.com/" data-layout="button"
+      data-size="small"><a target="_blank"
+        href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fbobbysohandsome.herokuapp.com%2F&amp;src=sdkpreparse"
+        class="fb-xfbml-parse-ignore">Share</a></div>
+    <div class="twitter"><a href="https://twitter.com/intent/tweet?text=Welcome%20to%20MagicMatrix!"
+        class="twitter-share-button" data-show-count="false">Tweet</a>
+      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     </div>
-    <!-- <form action="/play">
+  </div>
+  <!-- <form action="/play">
       <button id="tutorial" name="button">playpagetest</button>
     </form> -->
-    <!-- Login Modal -->
-    <!-- <div id="loginModal" class="loginModal">
+  <!-- Login Modal -->
+  <!-- <div id="loginModal" class="loginModal">
       <div class="modal-content1">
         <div class="modal-header">
           <span id="closeBtn1" class="closeBtn1">&times;</span>
@@ -54,8 +68,8 @@
     </div> -->
 
 
-    <!-- Signup Modal -->
-    <!-- <div id="signupModal" class="signupModal">
+  <!-- Signup Modal -->
+  <!-- <div id="signupModal" class="signupModal">
         <div class="modal-content2">
           <div class="modal-header">
             <span id="closeBtn2" class="closeBtn1">&times;</span>
@@ -69,6 +83,7 @@
           </form>
         </div>
     </div> -->
-    <!-- <script src="/js/magicMatrix.js"></script> -->
-  </body>
+  <!-- <script src="/js/magicMatrix.js"></script> -->
+</body>
+
 </html>
