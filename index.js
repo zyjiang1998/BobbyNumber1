@@ -590,6 +590,10 @@ io.on('connection',function(socket){
   socket.on('winner',function(rmif,own,score){
     io.emit('that',rmif,own,score);
   })
+  socket.on('okkk',function(us){
+      var tt = 1;
+      io.emit('lenmon',user,tt);
+  })
 
 });
 ///////////// Real time part; multiple player -- Kevin ////////////////////////////////

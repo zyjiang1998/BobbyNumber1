@@ -44,6 +44,14 @@
             //         window.location.reload();
             //     }
             // }
+            var ttr = 0;
+            socket.on('lenmon',function(user,tt){
+                if(user == document.getElementById('showInfo').innerHTML){
+                    ttr = tt;
+                    setTimeout(function(){window.location.reload(1);},100);
+                }
+                ttr = 0;
+            })
 
             socket.on('warn', function (room, person) {
                 var temp = document.getElementById(room).childNodes[1].childNodes[3].childNodes[1];
