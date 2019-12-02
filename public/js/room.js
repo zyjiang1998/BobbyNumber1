@@ -83,7 +83,7 @@ function ready(){
     room1.style.display = "none";
     user1.style.display = "none";
     temp.method = "POST";
-    temp.action = "/login/interface/multiplayer";
+    temp.action = "/load";
     temp.submit();
     var sig = document.getElementById('room').innerHTML;
   }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>loading</title>
+  </head>
+  <body>
+    <p id= "loaded" value = "<%=userName%>" style = "display:none;"><%=userName%></p>
+    <script type="text/javascript">
+      setTimeout(function(){display();},10);
+      function display(){
+        var x = document.getElementById('loaded').getAttribute('value');
+        console.log(x);
+        var temp = document.createElement("form");
+        document.body.appendChild(temp);
+        var user1 = document.createElement("input");
+        temp.appendChild(user1);
+        user1.setAttribute("name", "userName");
+        user1.setAttribute("value", x);
+        user1.style.display = "none";
+        temp.method = "POST";
+        temp.action = "/login/interface/multiplayer";
+        temp.submit();
+      }
+    </script>
+  </body>
+</html>

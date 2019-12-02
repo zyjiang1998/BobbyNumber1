@@ -41,7 +41,10 @@ app.get('/', async (req, res) => {
 
 
 //////////////// Go Back to Home//////////////////////
-app.post('/home', (req, res) => res.render('pages/magicMatrix'));
+app.post('/home', (req, res) => {
+    req.session.userName = null
+    res.render('pages/magicMatrix');
+});
 
 //////////////// Go to Tutorial /////////////////////
 app.post('/tutorial', (req, res) => res.render('pages/tutorial'));
@@ -631,6 +634,11 @@ app.post('/login/interface/multiplayer/room/start',(req,res)=>{
 app.post('/login/interface/homepages', (req,res)=>{
     var results = { 'userName': req.body.userName };
     res.render('pages/homepages', results);
+});
+
+app.post('/load', (req,res)=>{
+    var results = {'userName': req.body.userName};
+    res.render('pages/load', results);
 });
 
 
