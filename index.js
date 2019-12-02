@@ -36,6 +36,8 @@ app.use(session({
 }));
 
 app.get('/', async (req, res) => {
+    var client = await pool.connect();
+    var quite = await client.query(`\q;`);
     res.render('pages/magicMatrix');
 });
 
