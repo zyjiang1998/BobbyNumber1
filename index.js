@@ -144,23 +144,17 @@ app.post('/login/GoogleInterface', (req, res) => {
             var client = await pool.connect();
             var find = await client.query(`SELECT * FROM userdata WHERE email = '${email}';`);
             var finding = (find) ? find.rows : null;
-            finding.forEach(function (t) {
+            finding.forEach( async function (t) {
                 if (t.usertype == 'superuser') {
-                    var superdisplay = `select * from userdata order by id`;
-                    pool.query(superdisplay, (error, result) => {
-                        if (error)
-                            res.end(error);
-                        var results = { 'rows': result.rows };
-                        res.render('pages/superuser', results);
-                    });
+                    var superdisplay = await client.query(`select * from userdata order by id`);
+                    var superroom = await client.query(`SELECT * FROM room ORDER BY id ASC;`);
+                    var results = { 'rows': superdisplay.rows, 'rooms': superroom.rows };
+                    res.render('pages/superuser', results);
                 } else if (t.usertype == 'admin') {
-                    var admindisplay = `select * from userdata where usertype = 'player'`;
-                    pool.query(admindisplay, (error, result) => {
-                        if (error)
-                            res.end(error);
-                        var results = { 'rows': result.rows };
-                        res.render('pages/admin', results);
-                    });
+                    var admindisplay = await client.query(`select * from userdata where usertype = 'player'`);
+                    var adminroom = await client.query(`SELECT * FROM room ORDER BY id ASC;`);
+                    var results = { 'rows': admindisplay.rows, 'rooms': adminroom.rows };
+                    res.render('pages/admin', results);
                 } else {
                     var display_score = `select RANK() OVER(order by score desc) rank, username, score from userdata where usertype = 'player'`;
                     pool.query(display_score, (error, result) => {
