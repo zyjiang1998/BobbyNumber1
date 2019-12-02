@@ -470,7 +470,7 @@ io.on('connection',function(socket){
                 res.end(error)
               })
             }
-            if(p2 == ''){
+            else if(p2 == ''){
               var player = `UPDATE room SET player2 = '${nm}' WHERE name = '${ras}'`;
               pool.query(player,(error,result) => {
                 if(error)
