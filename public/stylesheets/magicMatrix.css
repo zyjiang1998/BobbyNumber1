@@ -206,5 +206,5 @@ button[name="button"]:hover:before {
   position:relative;
   top:198px;
   left:900px;
-  display: block;
+  display: inline-block;
 }
