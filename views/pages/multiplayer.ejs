@@ -35,15 +35,15 @@
         </div>
         <script type="text/javascript">
             var socket = io.connect('https://bobbysohandsome.herokuapp.com/');
-            window.onload = function () {
-                //considering there aren't any hashes in the urls already
-                if (!window.location.hash) {
-                    //setting window location
-                    window.location = window.location + '#loaded';
-                    //using reload() method to reload web page
-                    window.location.reload();
-                }
-            }
+            // window.onload = function () {
+            //     //considering there aren't any hashes in the urls already
+            //     if (!window.location.hash) {
+            //         //setting window location
+            //         window.location = window.location + '#loaded';
+            //         //using reload() method to reload web page
+            //         window.location.reload();
+            //     }
+            // }
 
             socket.on('warn', function (room, person) {
                 var temp = document.getElementById(room).childNodes[1].childNodes[3].childNodes[1];
