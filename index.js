@@ -35,16 +35,16 @@ app.use(session({
     },
 }));
 
-app.get('/', async (req, res) => {
-    var client = await pool.connect();
-    var quite = await client.query(`\q;`);
+app.get('/', (req, res) => {
     res.render('pages/magicMatrix');
 });
 
 
 //////////////// Go Back to Home//////////////////////
-app.post('/home', (req, res) => {
+app.post('/home', async (req, res) => {
     req.session.userName = null;
+    var client = await pool.connect();
+    var quite = await client.query(`\q;`);
     res.render('pages/magicMatrix');
 });
 
