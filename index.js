@@ -238,7 +238,7 @@ app.post('/login/reset', (req, res) => {
     res.render('pages/reset');
 });
 app.get('/login1', (req, res) => {
-    res.render('pages/login');
+    res.render('pages/login', {'determine': 0});
 });
 
 var nodemailer = require("nodemailer");
