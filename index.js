@@ -42,6 +42,7 @@ app.get('/', async (req, res) => {
 
 //////////////// Go Back to Home//////////////////////
 app.post('/home', (req, res) => {
+    req.session.cookie = null;
     res.render('pages/magicMatrix');
 });
 
