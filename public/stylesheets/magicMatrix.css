@@ -196,15 +196,15 @@ button[name="button"]:hover:before {
 }
 
 .fb-share-button{
-  position:relative;
+  position: fixed;
   top:220px;
-  left:820px;
-  display: inline-block;
+  left:40%;
+  display: block;
 }
 
 .twitter{
-  position:relative;
-  top:198px;
-  left:900px;
+  position: absolute;
+  top:1035px;
+  left:50%;
   display: inline-block;
 }
