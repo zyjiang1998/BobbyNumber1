@@ -122,6 +122,7 @@ app.post('/login/interface', async (req, res) => {
 app.post('/login/GoogleInterface', (req, res) => {
     var user = req.body.user;
     var email = req.body.email;
+    req.session.userName = user;
     var check = `SELECT * FROM userdata WHERE email = '${email}'`;
     pool.query(check, async (error, result) => {
         if (error)
