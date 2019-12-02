@@ -82,7 +82,7 @@ function ready(){
     user1.setAttribute("value", user);
     room1.style.display = "none";
     user1.style.display = "none";
-    temp.method = "POST";
+    temp.method = "GET";
     temp.action = "/login/interface/multiplayer";
     temp.submit();
     var sig = document.getElementById('room').innerHTML;
