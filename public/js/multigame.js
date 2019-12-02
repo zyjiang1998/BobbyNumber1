@@ -305,6 +305,7 @@ function start() {
     document.getElementsByTagName("p")[5].style.display = "none";
     document.getElementsByTagName("p")[6].style.display = "none";
     document.getElementsByTagName("p")[7].style.display = "none";
+    document.getElementById("matrix").style.display = "none";
     // document.getElementsByClassName("reset")[0].innerHTML = "Your final score is " + "&nbsp;" + score;
     var os = score;
     var own = document.getElementById('player').innerHTML;
