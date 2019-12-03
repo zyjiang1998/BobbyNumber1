@@ -121,6 +121,7 @@ app.post('/login/interface', async (req, res) => {
         var determines = { 'determine': -2 };
         res.render('pages/login', determines);
     }
+    client.release();
 });
 app.post('/login/GoogleInterface', (req, res) => {
     var user = req.body.user;
