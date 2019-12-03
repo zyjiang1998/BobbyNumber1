@@ -10,7 +10,7 @@ const { Pool } = require('pg');
 var pool;
 pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: true
+    //ssl: true
 });
 var app = express();
 // pool.connect();
@@ -77,7 +77,6 @@ app.post('/login/interface', async (req, res) => {
                     console.log(results);
                     res.render('pages/admin', results);
                     // });
-                    client.release();
                 } else {
                     var determines = { 'determine': -1 };
                     res.render('pages/login', determines);
@@ -95,7 +94,6 @@ app.post('/login/interface', async (req, res) => {
                     // console.log(results);
                     res.render('pages/superuser', results);
                     // });
-                    client.release();
                 } else {
                     var determines = { 'determine': -1 };
                     res.render('pages/login', determines);
@@ -113,7 +111,6 @@ app.post('/login/interface', async (req, res) => {
                         var results = { 'rows': result.rows, 'userName': user };
                         res.render('pages/homepages', results);
                     });
-                    client.release();
                 } else {
                     var determines = { 'determine': -1 };
                     res.render('pages/login', determines);
@@ -228,7 +225,6 @@ app.post('/update', async (req, res) => {
     }
     if (judg_name == "new" && judg_email == "new") {
         var insertQuery = await client.query(`INSERT INTO userdata(email, username, password, score, usertype)VALUES('${email}', '${name}', '${password}', 0, 'player');`);
-        client.release();
         res.render('pages/login', { 'determine': 0 });
     }
     client.release();
@@ -387,9 +383,8 @@ app.post('/superuser/user/:id', async (req, res) => {
     var dele = req.body.del;
     if (mode == 'Modify') {
         var modifyuqery = await client.query(`select * from userdata where id = ${req.params.id}`);
-        var results = { 'rows': result.rows };
+        var results = { 'rows': modifyuqery.rows };
         res.render('pages/modify', results);
-        client.release();
     } else if (dele == "Delete") {
         var deletequery = await client.query(`delete from userdata where userdata.id=${req.params.id}`);
         var superdisplay = await client.query(`select * from userdata order by id`);
@@ -398,7 +393,6 @@ app.post('/superuser/user/:id', async (req, res) => {
         setTimeout(function () {
             res.render('pages/superuser', results);
         }, 100)
-        client.release();
     }
     client.release();
 });
