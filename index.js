@@ -77,6 +77,7 @@ app.post('/login/interface', async (req, res) => {
                     console.log(results);
                     res.render('pages/admin', results);
                     // });
+                    client.release();
                 } else {
                     var determines = { 'determine': -1 };
                     res.render('pages/login', determines);
@@ -94,6 +95,7 @@ app.post('/login/interface', async (req, res) => {
                     // console.log(results);
                     res.render('pages/superuser', results);
                     // });
+                    client.release();
                 } else {
                     var determines = { 'determine': -1 };
                     res.render('pages/login', determines);
@@ -111,6 +113,7 @@ app.post('/login/interface', async (req, res) => {
                         var results = { 'rows': result.rows, 'userName': user };
                         res.render('pages/homepages', results);
                     });
+                    client.release();
                 } else {
                     var determines = { 'determine': -1 };
                     res.render('pages/login', determines);
@@ -154,11 +157,13 @@ app.post('/login/GoogleInterface', (req, res) => {
                     var superroom = await client.query(`SELECT * FROM room ORDER BY id ASC;`);
                     var results = { 'rows': superdisplay.rows, 'rooms': superroom.rows };
                     res.render('pages/superuser', results);
+                    client.release();
                 } else if (t.usertype == 'admin') {
                     var admindisplay = await client.query(`select * from userdata where usertype = 'player'`);
                     var adminroom = await client.query(`SELECT * FROM room ORDER BY id ASC;`);
                     var results = { 'rows': admindisplay.rows, 'rooms': adminroom.rows };
                     res.render('pages/admin', results);
+                    client.release();
                 } else {
                     var display_score = `select RANK() OVER(order by score desc) rank, username, score from userdata where usertype = 'player'`;
                     pool.query(display_score, (error, result) => {
@@ -169,6 +174,7 @@ app.post('/login/GoogleInterface', (req, res) => {
                     });
                 }
             })
+            client.release();
         }
     });
 });
@@ -180,6 +186,7 @@ app.post('/login/interface/singleplayer', async (req, res) => {
     var client = await pool.connect();
     var display_score = await client.query(`select rank() over (order by score desc) rank, username, score from userdata where usertype = 'player' limit 10;`);
     var results = { 'rows': display_score.rows, 'userName': user };
+    client.release();
     res.render('pages/singleplayer', results);
 });
 
@@ -221,8 +228,10 @@ app.post('/update', async (req, res) => {
     }
     if (judg_name == "new" && judg_email == "new") {
         var insertQuery = await client.query(`INSERT INTO userdata(email, username, password, score, usertype)VALUES('${email}', '${name}', '${password}', 0, 'player');`);
+        client.release();
         res.render('pages/login', { 'determine': 0 });
     }
+    client.release();
 });
 /////////////////////////// Go to signup pages//////////////////////////
 app.get('/magicMatrix', (req, res) => {
@@ -316,6 +325,7 @@ app.post('/login/reset/:rows/set_new_password', async (req, res) => {
         else
             deter = 0;
     });
+    client.release();
     res.render('pages/newPasswordDone', { 'rows': deter });
 });
 //////////////////////////////  Write By Kevin/////////////////////////////////////////
@@ -346,6 +356,7 @@ app.post('/admin/rooms/:name', async (req, res) => {
     setTimeout(function () {
         res.render('pages/superuser', results);
     }, 100)
+    client.release();
 });
 app.post('/admin/rooms1', async (req, res) => {
     var client = await pool.connect();
@@ -354,6 +365,7 @@ app.post('/admin/rooms1', async (req, res) => {
     var superroom = await client.query(`SELECT * FROM room ORDER BY id ASC;`);
     var results = { 'rows': superdisplay.rows, 'rooms': superroom.rows };
     res.render('pages/superuser', results);
+    client.release();
 });
 ///////////////////////////// Superuser //////////////////////////////////////////////////
 //superuser
@@ -366,6 +378,7 @@ app.post('/superuser/updateuser', async function (req, res) {
     setTimeout(function () {
         res.render('pages/superuser', results);
     }, 100)
+    client.release();
 });
 
 app.post('/superuser/user/:id', async (req, res) => {
@@ -376,6 +389,7 @@ app.post('/superuser/user/:id', async (req, res) => {
         var modifyuqery = await client.query(`select * from userdata where id = ${req.params.id}`);
         var results = { 'rows': result.rows };
         res.render('pages/modify', results);
+        client.release();
     } else if (dele == "Delete") {
         var deletequery = await client.query(`delete from userdata where userdata.id=${req.params.id}`);
         var superdisplay = await client.query(`select * from userdata order by id`);
@@ -384,7 +398,9 @@ app.post('/superuser/user/:id', async (req, res) => {
         setTimeout(function () {
             res.render('pages/superuser', results);
         }, 100)
+        client.release();
     }
+    client.release();
 });
 
 // for room
@@ -397,6 +413,7 @@ app.post('/superuser/rooms/:name', async (req, res) => {
     setTimeout(function () {
         res.render('pages/superuser', results);
     }, 100)
+    client.release();
 });
 app.post('/superuser/rooms1', async (req, res) => {
     var client = await pool.connect();
@@ -405,6 +422,7 @@ app.post('/superuser/rooms1', async (req, res) => {
     var superroom = await client.query(`SELECT * FROM room ORDER BY id ASC;`);
     var results = { 'rows': superdisplay.rows, 'rooms': superroom.rows };
     res.render('pages/superuser', results);
+    client.release();
 });
 
 ////////////// Insert Score ///////////////////////
