@@ -328,18 +328,19 @@ app.post('/login/reset/:rows/set_new_password', async (req, res) => {
 
 ////////////////////////////// Admin //////////////////////////////////////////////////
 //admin
-app.post('/admin/user/:id',async (req, res) => {
-    var client = await pool.connect();
-    var deletequery =`delete from userdata where userdata.id=${req.params.id};`;
+app.post('/admin/user/:id', (req, res) => {
+    var deletequery = `delete from userdata where userdata.id=${req.params.id}`;
     pool.query(deletequery, (error, result) => {
         if (error)
             res.end(error);
-        var admindisplay = await client.query(`select * from userdata where usertype = 'player'`);
-        var adminroom = await client.query(`SELECT * FROM room ORDER BY id ASC;`);
-        var results = { 'rows': admindisplay.rows, 'rooms': adminroom.rows};
-        res.render('pages/admin', results);
+        var admindisplay = `select * from userdata where usertype = 'player'`;
+        pool.query(admindisplay, (error, result) => {
+            if (error)
+                res.end(error);
+            var results = { 'rows': result.rows };
+            res.render('pages/admin', results);
+        });
     });
-    client.release();
 });
 // for room
 app.post('/admin/rooms/:name', async (req, res) => {
