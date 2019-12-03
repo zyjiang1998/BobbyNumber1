@@ -13,7 +13,7 @@ pool = new Pool({
     ssl: true
 });
 var app = express();
-pool.connect();
+// pool.connect();
 
 //middle wares
 app.use(express.static(path.join(__dirname, 'public')))
