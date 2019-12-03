@@ -328,25 +328,16 @@ app.post('/login/reset/:rows/set_new_password', async (req, res) => {
 
 ////////////////////////////// Admin //////////////////////////////////////////////////
 //admin
-app.post('/admin/user/:id', (req, res) => {
-    var deletequery = `delete from userdata where userdata.id=${req.params.id}`;
-    pool.query(deletequery, (error, result) => {
-        if (error)
-            res.end(error);
-        var admindisplay = `select * from userdata where usertype = 'player'`;
-        pool.query(admindisplay, (error, result) => {
-            if (error)
-                res.end(error);
-            var results = { 'rows': result.rows };
-            var adminroom = `select * from room order by id ASC;`;
-            pool.query(adminroom, (error, result)=>{
-                if(error)
-                    res.end(error);
-                results = {'rooms':result.rows};
-            });
-            res.render('pages/admin', results);
-        });
-    });
+app.post('/admin/user/:id', async (req, res) => {
+    var client = await pool.connect();
+    var deletequery = await client.query(`delete from userdata where userdata.id=${req.params.id}`);
+    var superdisplay = await client.query(`select * from userdata where usertype = 'player'`);
+    var superroom = await client.query(`SELECT * FROM room ORDER BY id ASC;`);
+    var results = { 'rows': superdisplay.rows, 'rooms': superroom.rows };
+    setTimeout(function () {
+        res.render('pages/admin', results);
+    }, 100)
+    client.release();
 });
 // for room
 app.post('/admin/rooms/:name', async (req, res) => {
