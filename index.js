@@ -338,6 +338,12 @@ app.post('/admin/user/:id', (req, res) => {
             if (error)
                 res.end(error);
             var results = { 'rows': result.rows };
+            var adminroom = `select * from room order by id ASC;`;
+            pool.query(adminroom, (error, result)=>{
+                if(error)
+                    res.end(error);
+                results = {'rooms':result.rows};
+            });
             res.render('pages/admin', results);
         });
     });

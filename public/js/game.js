@@ -252,7 +252,7 @@ function show() {
 }
 
 function start() {
-  if (times <= 1) {
+  if (times <= 20) {
     if (times == 0) {
       if (rrr == 0) {
         document.getElementById("button").style.display = "none";
